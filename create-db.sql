@@ -40,7 +40,8 @@ CREATE TABLE "PERSON"
     "PERSONTYPE" CHAR(1 BYTE),
     "USERNAME" VARCHAR2(55 BYTE),
     "PASSWORD" VARCHAR2(55 BYTE),
-    "ACTIVE_USER" NUMBER(1,0) DEFAULT 1 --1 yes, 0 no
+    "ACTIVE_USER" NUMBER(1,0) DEFAULT 1, --1 yes, 0 no,
+    "BIRTH_DATE" DATE
    ) SEGMENT CREATION IMMEDIATE;
 --------------------------------------------------------
 --------------------------------------------------------

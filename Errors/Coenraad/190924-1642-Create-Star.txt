@@ -1,0 +1,134 @@
+
+Error starting at line : 2 in command -
+DROP TABLE FACT_SALARYPAID
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 3 in command -
+DROP TABLE FACT_SUBTYPES
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 4 in command -
+DROP TABLE FACT_READING
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 5 in command -
+DROP TABLE DIM_STATION
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 6 in command -
+DROP TABLE DIM_LOCATION
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 7 in command -
+DROP TABLE DIM_CUSTOMER
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 8 in command -
+DROP TABLE DIM_SUBSCRIPTION
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 9 in command -
+DROP TABLE DIM_SALARY
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 10 in command -
+DROP TABLE DIM_EMPLOYEE
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Error starting at line : 11 in command -
+DROP TABLE DIM_TIME
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Table DIM_STATION created.
+
+
+Table DIM_LOCATION created.
+
+
+Table DIM_TIME created.
+
+
+Table FACT_READING created.
+
+
+Table FACT_READING altered.
+
+
+Table FACT_READING altered.
+
+
+Table FACT_READING altered.
+
+
+Table DIM_SUBSCRIPTION created.
+
+
+Table DIM_CUSTOMER created.
+
+
+Table FACT_SUBTYPES created.
+
+
+Table FACT_SUBTYPES altered.
+
+
+Table FACT_SUBTYPES altered.
+
+
+Table DIM_SALARY created.
+
+
+Table DIM_EMPLOYEE created.
+
+
+Table FACT_SALARYPAID created.
+
+
+Table FACT_SALARYPAID altered.
+
+
+Table FACT_SALARYPAID altered.
+
+
+Table FACT_SALARYPAID altered.
+

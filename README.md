@@ -1,22 +1,39 @@
 # ITRW321-Semester_Project
-This is the repository for our DB project!
+
+This is the repository for our final DB project!
 
 ## Setup Dev Environment
+
 * Run ```crate-db.sql``` to create the operation database from the previous semester.
 * Run ```star_create.sql``` to create the star schemes for the DSS.
 
 ## Work Allocation
-Morne
+
+**Morne**
 - Temperature (per station / per location).
 - Employee Salary.
 
-Eon 
+**Eon** 
 - Air Pressure (per station / per location).
 - Age of customer.
 
-Coenraad
+**Coenraad**
 - Humidity (per station / per location).
 
-Rainard
+**Rainard**
 - Ambient light (per station / per location).
 
+## Some Useful Resources
+
+- Our google drive folder for the project.
+- https://www.techonthenet.com/oracle/subqueries.php
+- https://www.essentialsql.com/get-ready-to-learn-sql-server-20-using-subqueries-in-the-select-statement/
+- https://www.oracletutorial.com/oracle-basics/oracle-subquery/
+- https://www.webucator.com/tutorial/advanced-oracle-sql-queries/using-subqueries.cfm
+- http://www.java2s.com/Code/Oracle/PL-SQL/RETURNINGINTOclause.htm
+- https://oracle-base.com/articles/misc/dml-returning-into-clause
+- https://www.webucator.com/tutorial/oracle-pl-sql/declaring-variables.cfm
+- https://docs.oracle.com/cd/B28359_01/server.111/b28286/functions052.htm#SQLRF00639
+- https://blogs.oracle.com/oraclemagazine/working-with-dates-in-plsql
+- https://www.oracletutorial.com/oracle-date-functions/
+- https://www.oracletutorial.com/oracle-date-functions/oracle-extract/

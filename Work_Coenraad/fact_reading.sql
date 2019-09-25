@@ -1,3 +1,18 @@
+/* Ensure that location dimension is up to date */
+DELETE FROM dim_location;
+
+INSERT INTO dim_location
+    SELECT location.locationid, location.locationname
+    FROM location;
+    
+/* Ensure that station dimension is up to date */
+DELETE FROM dim_station;
+
+INSERT INTO dim_station
+    SELECT station.stationid, station.isactive
+    FROM station;
+
+/* Populate fact table */
 DECLARE
     l_today_date DATE := SYSDATE;
     l_today_timestamp TIMESTAMP := SYSTIMESTAMP;

@@ -1,0 +1,15 @@
+
+2 rows deleted.
+
+
+2 rows inserted.
+
+
+0 rows deleted.
+
+
+3 rows inserted.
+
+
+PL/SQL procedure successfully completed.
+

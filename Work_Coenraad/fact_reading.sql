@@ -1,3 +1,6 @@
+/* Removes facts from fact_reading for update */
+DELETE FROM fact_reading;
+
 /* Ensure that location dimension is up to date */
 DELETE FROM dim_location;
 

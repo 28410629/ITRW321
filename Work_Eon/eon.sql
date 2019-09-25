@@ -1,3 +1,14 @@
+DELETE FROM FACT_SUBTYPES;
+DELETE FROM FACT_SALARYPAID;
+DELETE FROM FACT_READING;
+DELETE FROM DIM_SUBSCRIPTION;
+DELETE FROM DIM_CUSTOMER;
+DELETE FROM DIM_SALARY;
+DELETE FROM DIM_EMPLOYEE;
+DELETE FROM DIM_TIME;
+DELETE FROM DIM_LOCATION;
+DELETE FROM DIM_STATION;
+
 -----------------Subype Fact Table
 
 -----------------Populate Subscription Dimension
@@ -76,3 +87,39 @@ WHERE   e.PersonID = p.PersonID
 GROUP BY    p.personid,
             s.salaryid,
             t.time_id;
+
+-----------------Average area air pressure view
+-------Unsure which is correct
+
+CREATE OR REPLACE VIEW area_air_pressure_view AS
+SELECT  DISTINCT l.location_name,
+        f.time_id,f.avg_airpressure
+FROM    FACT_READING f, DIM_TIME t,
+        DIM_STATION s, DIM_LOCATION l
+WHERE   f.location_id = l.location_id AND
+        f.time_id = t.time_id
+ORDER BY l.location_name ASC;
+
+-------OR though the following one does not work when i try to create a view
+
+CREATE OR REPLACE VIEW area_air_pressure_view AS
+SELECT  DISTINCT l.location_name,
+        f.time_id,AVG(f.avg_airpressure)
+FROM    FACT_READING f, DIM_TIME t,
+        DIM_STATION s, DIM_LOCATION l
+WHERE   f.location_id = l.location_id AND
+        f.time_id = t.time_id
+GROUP BY l.location_name, f.time_id;
+
+-----------------Average station air pressure view
+
+CREATE OR REPLACE VIEW station_air_pressure_view AS
+SELECT  DISTINCT s.station_id,
+        f.time_id,f.avg_airpressure
+FROM    FACT_READING f, DIM_TIME t,
+        DIM_STATION s, DIM_LOCATION l
+WHERE   f.station_id = s.station_id AND
+        f.time_id = t.time_id
+ORDER BY s.station_id ASC;
+
+-----------------Average age of customer subscription view

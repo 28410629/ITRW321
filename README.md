@@ -10,18 +10,26 @@ This is the repository for our final DB project!
 ## Work Allocation
 
 **Morne**
-- Temperature (per station / per location).
-- Employee Salary.
+- [x] Initial DB setup.
+- [ ] Generate view for *Temperature per station*.
+- [ ] Generate view for *Temperature per location*.
+- [ ] Generate view for *Employee Salary*.
 
 **Eon** 
-- Air Pressure (per station / per location).
-- Age of customer.
+- [ ] Populate fact table: *FACT_SALARYPAID*.
+- [ ] Populate fact table: *FACT_SUBTYPES*.
+- [ ] Generate view for *Air Pressure per station*.
+- [ ] Generate view for *Air Pressure per location*.
+- [ ] Generate view for *Age of Customer per Subscription*.
 
 **Coenraad**
-- Humidity (per station / per location).
+- [ ] Populate fact table: *FACT_READINGS*.
+- [ ] Generate view for *Humidity per station*.
+- [ ] Generate view for *Humidity per location*.
 
 **Rainard**
-- Ambient light (per station / per location).
+- [ ] Generate view for *Ambient light per station*.
+- [ ] Generate view for *Ambient light per location*.
 
 ## Some Useful Resources
 

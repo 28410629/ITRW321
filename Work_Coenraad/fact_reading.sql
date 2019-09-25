@@ -12,8 +12,7 @@ BEGIN
         EXTRACT (month FROM l_today_date),
         EXTRACT (year FROM l_today_date)
     );
-    INSERT INTO FACT_READING
-    (
+    INSERT INTO fact_reading
         SELECT s.stationid, s.locationid, l_today_date, (
             /* Nested query for air pressure for a station id. */
             SELECT AVG(stationreading.air_pressure)
@@ -35,9 +34,8 @@ BEGIN
             FROM stationreading
             WHERE stationid = s.stationid
     )
-    FROM stationreading R
-    JOIN station S
-    ON s.stationid = r.stationid
-    GROUP BY s.stationid, s.locationid, l_today_date
-    );
+    FROM stationreading r
+    FULL OUTER JOIN station s
+    ON s.stationid = r.stationid 
+    GROUP BY s.stationid, s.locationid, l_today_date;
 END;

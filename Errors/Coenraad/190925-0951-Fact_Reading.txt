@@ -1,3 +1,5 @@
+
+Error starting at line : 1 in command -
 DECLARE
     l_today_date DATE := SYSDATE;
     l_today_timestamp TIMESTAMP := SYSTIMESTAMP;
@@ -41,3 +43,9 @@ BEGIN
     GROUP BY s.stationid, s.locationid, l_today_date
     );
 END;
+Error report -
+ORA-02291: integrity constraint (BATMAN.LOCATION_FK) violated - parent key not found
+ORA-06512: at line 15
+02291. 00000 - "integrity constraint (%s.%s) violated - parent key not found"
+*Cause:    A foreign key value has no matching primary key value.
+*Action:   Delete the foreign key or add a matching primary key.

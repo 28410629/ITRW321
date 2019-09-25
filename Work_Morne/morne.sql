@@ -7,6 +7,21 @@ DELETE FROM DIM_SALARY;
 DELETE FROM DIM_EMPLOYEE;
 DELETE FROM DIM_TIME;
 
+--##################READINGS STAR SCHEME####################
+--------------------------------------------------------------------------------
+--Populate DIM_TIME
+--------------------------------------------------------------------------------
+INSERT INTO DIM_TIME (time_id, hour, day, week, month, year)
+SELECT DISTINCT
+    READING_DATE,
+    TO_CHAR(READING_DATE, 'HH24') AS HOUR,
+    EXTRACT (day FROM READING_DATE) AS DAY,
+    to_number(to_char(READING_DATE,'ww')) AS WEEK,
+    EXTRACT (month FROM READING_DATE) AS MONTH,
+    EXTRACT (year FROM READING_DATE) AS YEAR
+FROM STATIONREADING;
+
+
 --###################SUBTYPE STAR SCHEME####################
 --------------------------------------------------------------------------------
 --Populate DIM_SUBSCRIPTION

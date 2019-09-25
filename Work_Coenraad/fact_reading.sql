@@ -1,6 +1,9 @@
 /* Removes facts from fact_reading for update */
 DELETE FROM fact_reading;
 
+/* Clear time dimension table for new facts */
+DELETE FROM dim_time;
+
 /* Ensure that location dimension is up to date */
 DELETE FROM dim_location;
 
@@ -26,7 +29,7 @@ BEGIN
         l_today_date, 
         EXTRACT (hour FROM l_today_timestamp),
         EXTRACT (day FROM l_today_date),
-        EXTRACT (month FROM l_today_date),
+        to_number(to_char(sysdate,'ww')),
         EXTRACT (month FROM l_today_date),
         EXTRACT (year FROM l_today_date)
     );

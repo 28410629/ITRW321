@@ -19,14 +19,14 @@ This is the repository for our final DB project!
 **Eon** 
 - [x] Populate fact table: *FACT_SALARYPAID*.
 - [x] Populate fact table: *FACT_SUBTYPES*.
-- [ ] Generate view for *Air Pressure per station*.
-- [ ] Generate view for *Air Pressure per location*.
+- [x] Generate view for *Air Pressure per station*.
+- [x] Generate view for *Air Pressure per location*.
 - [ ] Generate view for *Age of Customer per Subscription*.
 
 **Coenraad**
 - [x] Populate fact table: *FACT_READINGS*.
-- [ ] Generate view for *Humidity per station*.
-- [ ] Generate view for *Humidity per location*.
+- [x] Generate view for *Humidity per station*.
+- [x] Generate view for *Humidity per location*.
 
 **Rainard**
 - [ ] Generate view for *Ambient light per station*.

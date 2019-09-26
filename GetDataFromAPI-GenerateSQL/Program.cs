@@ -124,7 +124,7 @@ namespace GetDataFromAPI_GenerateSQL
             {
                 Console.WriteLine("[ OK! ] Starting writing sql file, lines amount to " + lines.Count);
                 String path = Directory.GetCurrentDirectory() + "/" +
-                              +DateTime.Now.Date.Year + "-"
+                              + DateTime.Now.Date.Year + "-"
                               + DateTime.Now.Date.Month + "-"
                               + DateTime.Now.Date.Day + "_"
                               + DateTime.Now.Hour + ""

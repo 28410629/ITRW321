@@ -30,21 +30,21 @@ namespace GetDataFromAPI_GenerateSQL
             if (station0Length != 0)
             {
                 Console.WriteLine("[ OK! ] Starting to transform station 2347795");
-                GenerateInsertSql(station0);
+                GenerateInsertSql(station0, 1, 1);
             }
             if (station1Length != 0)
             {
                 Console.WriteLine("[ OK! ] Starting to transform station 10359807");
-                GenerateInsertSql(station1);
+                GenerateInsertSql(station1, 2, 1);
             }
             if (station2Length != 0)
             {
                 Console.WriteLine("[ OK! ] Starting to transform station 10359964");
-                GenerateInsertSql(station2);
+                GenerateInsertSql(station2, 3, 2);
             }
             
             // Write sql file to load new data into db
-            WriteSqlFile(lines);
+            WriteSqlFile();
         }
 
         static RawReadingsDto GetJsonObject(string url)
@@ -62,13 +62,22 @@ namespace GetDataFromAPI_GenerateSQL
                 webRequest.ContentType = "application/json";
                 webRequest.UserAgent = "Nothing";
 
+                Console.WriteLine("[ OK! ] Downloading json");
                 using (var s = webRequest.GetResponse().GetResponseStream())
                 {
                     using (var sr = new StreamReader(s))
                     {
                         Console.WriteLine("[ OK! ] Creating object from json");
                         var reponse = sr.ReadToEnd();
-                        return JsonConvert.DeserializeObject<RawReadingsDto>(reponse);
+                        if (reponse != "")
+                        {
+                            return JsonConvert.DeserializeObject<RawReadingsDto>(reponse);
+                        }
+                        else
+                        {
+                            Console.WriteLine("[ ERR ] Body of json was empty can't create object");
+                            return new RawReadingsDto();
+                        }
                     }
                 }
             }
@@ -77,29 +86,58 @@ namespace GetDataFromAPI_GenerateSQL
                 Console.WriteLine("[ ERR ] " + e.Message);
                 return new RawReadingsDto();
             }
-            
         }
 
-        static Void GenerateInsertSql(RawReadingsDto json)
+        static void GenerateInsertSql(RawReadingsDto json, int stationid, int location)
         {
-            List<String> lines = new List<string>();
-            for (int i = 0; i < json.Readings.Length; i++)
+            try
             {
-                lines.Add("");
+                for (int i = 0; i < json.Readings.Length; i++)
+                {
+                    lines.Add(
+                        "INSERT INTO \"STATIONREADING\" (STATIONID, READINGLOCATION, READING_DATE, TEMPERATURE, AIR_PRESSURE, AMBIENT_LIGHT, HUMIDITY, ALTITUDE) VALUES ("
+                        + stationid + ", "
+                        + location + ", " +
+                        +json.Readings[i].Date.Year + "-"
+                        + json.Readings[i].Date.Month + "-"
+                        + json.Readings[i].Date.Day + " "
+                        + json.Readings[i].Date.Hour + ":"
+                        + json.Readings[i].Date.Minute + ":"
+                        + json.Readings[i].Date.Second + ", \'YYYY-MM-DD HH24:MI:SS'), "
+                        + json.Readings[i].Temperature + ", "
+                        + json.Readings[i].AirPressure + ", "
+                        + json.Readings[i].AmbientLight / 10.24 + ", "
+                        + json.Readings[i].Humidity + ", "
+                        + 1335 + ");");
+                }
+                File.WriteAllLines(@"C:\Users\Public\TestFolder\WriteLines.txt" + DateTime.Now.Date.Year, lines);
             }
-            File.WriteAllLines(@"C:\Users\Public\TestFolder\WriteLines.txt" + DateTime.Now.Date.Year, lines);
+            catch (Exception e)
+            {
+                Console.WriteLine("[ ERR ] " + e.Message);
+            }
         }
 
-        static Void WriteSqlFile(List<String> lines)
+        static void WriteSqlFile()
         {
-            File.WriteAllLines(Directory.GetCurrentDirectory() + "/" +
-                               + DateTime.Now.Date.Year + "-" 
-                               + DateTime.Now.Date.Month + "-" 
-                               + DateTime.Now.Date.Day + "_" 
-                               + DateTime.Now.Hour + "" 
-                               + DateTime.Now.Minute 
-                               + ".sql"
-                , lines);
+            try
+            {
+                Console.WriteLine("[ OK! ] Starting writing sql file, lines amount to " + lines.Count);
+                String path = Directory.GetCurrentDirectory() + "/" +
+                              +DateTime.Now.Date.Year + "-"
+                              + DateTime.Now.Date.Month + "-"
+                              + DateTime.Now.Date.Day + "_"
+                              + DateTime.Now.Hour + ""
+                              + DateTime.Now.Minute
+                              + ".sql";
+                
+                File.WriteAllLines(path, lines);
+                Console.WriteLine("[ OK! ] Done writing file: " + path);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("[ ERR ] " + e.Message);
+            }
         }
     }
 }

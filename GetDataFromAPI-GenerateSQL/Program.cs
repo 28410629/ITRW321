@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
@@ -7,6 +8,8 @@ namespace GetDataFromAPI_GenerateSQL
 {
     class Program
     {
+        private static List<String> lines;
+        
         static void Main(string[] args)
         {
             // Get objects
@@ -23,21 +26,25 @@ namespace GetDataFromAPI_GenerateSQL
             var station2Length = station2.Readings.Length;
             
             // Transform data on usable objects
+            lines = new List<string>();
             if (station0Length != 0)
             {
                 Console.WriteLine("[ OK! ] Starting to transform station 2347795");
-                GenerateInserSql(station0);
+                GenerateInsertSql(station0);
             }
             if (station1Length != 0)
             {
                 Console.WriteLine("[ OK! ] Starting to transform station 10359807");
-                GenerateInserSql(station1);
+                GenerateInsertSql(station1);
             }
             if (station2Length != 0)
             {
                 Console.WriteLine("[ OK! ] Starting to transform station 10359964");
-                GenerateInserSql(station2);
+                GenerateInsertSql(station2);
             }
+            
+            // Write sql file to load new data into db
+            WriteSqlFile(lines);
         }
 
         static RawReadingsDto GetJsonObject(string url)
@@ -68,13 +75,31 @@ namespace GetDataFromAPI_GenerateSQL
             catch (Exception e)
             {
                 Console.WriteLine("[ ERR ] " + e.Message);
+                return new RawReadingsDto();
             }
             
         }
 
-        static Void GenerateInserSql(RawReadingsDto json)
+        static Void GenerateInsertSql(RawReadingsDto json)
         {
-            
+            List<String> lines = new List<string>();
+            for (int i = 0; i < json.Readings.Length; i++)
+            {
+                lines.Add("");
+            }
+            File.WriteAllLines(@"C:\Users\Public\TestFolder\WriteLines.txt" + DateTime.Now.Date.Year, lines);
+        }
+
+        static Void WriteSqlFile(List<String> lines)
+        {
+            File.WriteAllLines(Directory.GetCurrentDirectory() + "/" +
+                               + DateTime.Now.Date.Year + "-" 
+                               + DateTime.Now.Date.Month + "-" 
+                               + DateTime.Now.Date.Day + "_" 
+                               + DateTime.Now.Hour + "" 
+                               + DateTime.Now.Minute 
+                               + ".sql"
+                , lines);
         }
     }
 }

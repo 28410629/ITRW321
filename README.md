@@ -11,19 +11,20 @@ This is the repository for our final DB project!
 
 **Morne**
 - [x] Initial DB setup.
+- [x] Combine group member work for ETL.
 - [ ] Generate view for *Temperature per station*.
 - [ ] Generate view for *Temperature per location*.
 - [ ] Generate view for *Employee Salary*.
 
 **Eon** 
-- [ ] Populate fact table: *FACT_SALARYPAID*.
-- [ ] Populate fact table: *FACT_SUBTYPES*.
+- [x] Populate fact table: *FACT_SALARYPAID*.
+- [x] Populate fact table: *FACT_SUBTYPES*.
 - [ ] Generate view for *Air Pressure per station*.
 - [ ] Generate view for *Air Pressure per location*.
 - [ ] Generate view for *Age of Customer per Subscription*.
 
 **Coenraad**
-- [ ] Populate fact table: *FACT_READINGS*.
+- [x] Populate fact table: *FACT_READINGS*.
 - [ ] Generate view for *Humidity per station*.
 - [ ] Generate view for *Humidity per location*.
 

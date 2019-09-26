@@ -1,0 +1,52 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/coen/Documents/ITRW321-Semester_Project/GetDataFromAPI-GenerateSQL/GetDataFromAPI-GenerateSQL.csproj": {}
+  },
+  "projects": {
+    "/home/coen/Documents/ITRW321-Semester_Project/GetDataFromAPI-GenerateSQL/GetDataFromAPI-GenerateSQL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/coen/Documents/ITRW321-Semester_Project/GetDataFromAPI-GenerateSQL/GetDataFromAPI-GenerateSQL.csproj",
+        "projectName": "GetDataFromAPI-GenerateSQL",
+        "projectPath": "/home/coen/Documents/ITRW321-Semester_Project/GetDataFromAPI-GenerateSQL/GetDataFromAPI-GenerateSQL.csproj",
+        "packagesPath": "/home/coen/.nuget/packages/",
+        "outputPath": "/home/coen/Documents/ITRW321-Semester_Project/GetDataFromAPI-GenerateSQL/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/coen/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

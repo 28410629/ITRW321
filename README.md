@@ -35,6 +35,7 @@ run 03-update-populate-stars.sql
 - [x] Populate fact table: *FACT_READINGS*.
 - [x] Generate view for *Humidity per station*.
 - [x] Generate view for *Humidity per location*.
+- [ ] Create program to get readings from API and generate insert SQL.
 
 **Rainard**
 - [ ] Generate view for *Ambient light per station*.

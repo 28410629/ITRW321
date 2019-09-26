@@ -97,13 +97,13 @@ namespace GetDataFromAPI_GenerateSQL
                     lines.Add(
                         "INSERT INTO \"STATIONREADING\" (STATIONID, READINGLOCATION, READING_DATE, TEMPERATURE, AIR_PRESSURE, AMBIENT_LIGHT, HUMIDITY, ALTITUDE) VALUES ("
                         + stationid + ", "
-                        + location + ", " +
-                        +json.Readings[i].Date.Year + "-"
+                        + location + ", TO_DATE(\'" +
+                        + json.Readings[i].Date.Year + "-"
                         + json.Readings[i].Date.Month + "-"
                         + json.Readings[i].Date.Day + " "
                         + json.Readings[i].Date.Hour + ":"
                         + json.Readings[i].Date.Minute + ":"
-                        + json.Readings[i].Date.Second + ", \'YYYY-MM-DD HH24:MI:SS'), "
+                        + json.Readings[i].Date.Second + "\', \'YYYY-MM-DD HH24:MI:SS\'), "
                         + json.Readings[i].Temperature + ", "
                         + json.Readings[i].AirPressure + ", "
                         + json.Readings[i].AmbientLight / 10.24 + ", "

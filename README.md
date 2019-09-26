@@ -15,6 +15,17 @@ run 03-update-populate-stars.sql
 * Run `02-star_create.sql` to create the star schemes for the DSS.
 * Run `03-update-populate-stars.sql` to execute the ETL (extract, transform and load) for the DSS system.
 
+## Get Readings From API
+
+New readings can be added at any time form Anchormenstations API. 
+
+**Just run the .Net Core 3 program:**
+
+```bash
+cd ITRW321-Semester_Project/Output-GetDataFromAPI-GenerateSQL
+dotnet GetDataFromAPI-GenerateSQL.dll 
+```
+
 ## Work Allocation
 
 **Morne**
@@ -35,7 +46,7 @@ run 03-update-populate-stars.sql
 - [x] Populate fact table: *FACT_READINGS*.
 - [x] Generate view for *Humidity per station*.
 - [x] Generate view for *Humidity per location*.
-- [ ] Create program to get readings from API and generate insert SQL.
+- [x] Create program to get readings from API and generate insert SQL.
 
 **Rainard**
 - [ ] Generate view for *Ambient light per station*.

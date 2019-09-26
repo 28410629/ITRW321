@@ -83,11 +83,52 @@ ON S.STATION_ID=F.STATION_ID AND F.TIME_ID > (SYSDATE-365) AND S.ISACTIVE = 1
 GROUP BY S.STATION_ID;
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
---#################### TOTAL SALARY PVER TIME PER EMPLOYEE TYPE ########################
+--#################### TOTAL SALARY PVER TIME PER EMPLOYEE TYPE ################
 --------------------------------------------------------------------------------
+--Total salary per employee type for ALL TIME
 SELECT
         E.POSITION_TYPE AS "Employee Type",
         SUM(S.AMOUNT) as "Amount Paid"
 FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
 JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID
 GROUP BY E.POSITION_TYPE;
+--------------------------------------------------------------------------------
+--Total salary per employee type for PAST HOUR
+--------------------------------------------------------------------------------
+SELECT
+        E.POSITION_TYPE AS "Employee Type",
+        SUM(S.AMOUNT) as "Amount Paid"
+FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
+JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID AND F.TIME_ID > (SYSDATE-1/24)
+GROUP BY E.POSITION_TYPE;
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--Total salary per employee type for PAST DAY
+--------------------------------------------------------------------------------
+SELECT
+        E.POSITION_TYPE AS "Employee Type",
+        SUM(S.AMOUNT) as "Amount Paid"
+FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
+JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID AND F.TIME_ID > (SYSDATE-1)
+GROUP BY E.POSITION_TYPE;
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--Total salary per employee type for PAST WEEK
+--------------------------------------------------------------------------------
+SELECT
+        E.POSITION_TYPE AS "Employee Type",
+        SUM(S.AMOUNT) as "Amount Paid"
+FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
+JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID AND F.TIME_ID > (SYSDATE-7)
+GROUP BY E.POSITION_TYPE;
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+--Total salary per employee type for PAST YEAR
+--------------------------------------------------------------------------------
+SELECT
+        E.POSITION_TYPE AS "Employee Type",
+        SUM(S.AMOUNT) as "Amount Paid"
+FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
+JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID AND F.TIME_ID > (SYSDATE-365)
+GROUP BY E.POSITION_TYPE;
+--------------------------------------------------------------------------------

@@ -20,11 +20,11 @@ run 03-update-populate-stars.sql
 **Morne**
 - [x] Initial DB setup.
 - [x] Combine group member work for ETL.
-- [ ] Generate view for *Temperature per station*.
-- [ ] Generate view for *Temperature per location*.
-- [ ] Generate view for *Employee Salary*.
+- [x] Generate view for *Temperature per station*.
+- [x] Generate view for *Temperature per location*.
+- [x] Generate view for *Employee Salary*.
 
-**Eon** 
+**Eon**
 - [x] Populate fact table: *FACT_SALARYPAID*.
 - [x] Populate fact table: *FACT_SUBTYPES*.
 - [x] Generate view for *Air Pressure per station*.

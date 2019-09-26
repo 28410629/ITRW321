@@ -4,8 +4,9 @@ This is the repository for our final DB project!
 
 ## Setup Dev Environment
 
-* Run ```crate-db.sql``` to create the operation database from the previous semester.
-* Run ```star_create.sql``` to create the star schemes for the DSS.
+* Run `ITRW321-Semester_Project/Create_Database/01-create-db.sql` to create the operation database from the previous semester.
+* Run `ITRW321-Semester_Project/Create_Database/02-star_create.sql` to create the star schemes for the DSS.
+* Run `ITRW321-Semester_Project/Create_Database/03-update-populate-stars.sql` to execute the ETL (extract, transform and load) for the DSS system.
 
 ## Work Allocation
 

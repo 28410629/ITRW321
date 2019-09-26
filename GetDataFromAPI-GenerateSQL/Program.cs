@@ -1,6 +1,10 @@
 ﻿using System;
-using System.Net.Http;
-using System.Text;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Net;
+using System.Net.Security;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -10,33 +14,25 @@ namespace GetDataFromAPI_GenerateSQL
     {
         static void Main(string[] args)
         {
-            
-        }
-        
-        public static async Task<object> GetJsonAndMapToObject(string url, object jsonObject)
-        {
-            try
+            var webRequest =
+                WebRequest.Create(@"http://weatherstationapi.ddns.net:5000/api/get/rawreadings/station/day?StationId=10359964") as HttpWebRequest;
+            if (webRequest == null)
             {
-                Console.WriteLine("[ OK! ] Creating HttpClient");
-                using (HttpClient client = new HttpClient())
+                return;
+            }
+
+            webRequest.ContentType = "application/json";
+            webRequest.UserAgent = "Nothing";
+
+            using (var s = webRequest.GetResponse().GetResponseStream())
+            {
+                using (var sr = new StreamReader(s))
                 {
-                    var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
-                    Console.WriteLine("[ OK! ] Downloading JSON");
-                    var response = await client.PostAsync(url, content);
-                    if (response != null)
-                    {
-                        var jsonString = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine("[ OK! ] Deserialise JSON to Object");
-                        return JsonConvert.DeserializeObject<object>(jsonString);
-                    }
-                    Console.WriteLine("[ ERR ] JSON Response Equals Null");
+                    var contributorsAsJson = sr.ReadToEnd();
+                    var contributors = JsonConvert.DeserializeObject<RawReadingsDto>(contributorsAsJson);
+                    Console.WriteLine(contributors.Readings[0].Date);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("[ ERR ] " + ex.Message);
-            }
-            return null;
         }
     }
 }

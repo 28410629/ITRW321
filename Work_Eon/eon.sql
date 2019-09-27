@@ -124,7 +124,7 @@ ORDER BY s.station_id ASC;
 
 -----------------Average age of customer subscription view
 
-CREATE OR REPLACE VIEW area_air_pressure_view AS
+CREATE OR REPLACE VIEW avg_sub_age_view  AS
 SELECT      s.name AS "Subscription", AVG(ROUND((SYSDATE - c.birth_date)/365,0)) AS "Age"
 FROM        (DIM_SUBSCRIPTION s JOIN FACT_SUBTYPES f ON s.sub_id = f.sub_id)
             JOIN DIM_CUSTOMER c on f.person_id = c.person_id

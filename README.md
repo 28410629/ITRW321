@@ -17,13 +17,13 @@ run 03-update-populate-stars.sql
 
 ## Get Readings From API
 
-New readings can be added at any time form Anchormenstations API. 
+New readings can be added at any time form Anchormenstations API.
 
 **Just run the .Net Core 3 program:**
 
 ```bash
 cd ITRW321-Semester_Project/Output-GetDataFromAPI-GenerateSQL
-dotnet GetDataFromAPI-GenerateSQL.dll 
+dotnet GetDataFromAPI-GenerateSQL.dll
 ```
 
 ## Work Allocation
@@ -40,7 +40,7 @@ dotnet GetDataFromAPI-GenerateSQL.dll
 - [x] Populate fact table: *FACT_SUBTYPES*.
 - [x] Generate view for *Air Pressure per station*.
 - [x] Generate view for *Air Pressure per location*.
-- [ ] Generate view for *Age of Customer per Subscription*.
+- [x] Generate view for *Age of Customer per Subscription*.
 
 **Coenraad**
 - [x] Populate fact table: *FACT_READINGS*.

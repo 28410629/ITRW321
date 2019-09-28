@@ -66,3 +66,11 @@ dotnet GetDataFromAPI-GenerateSQL.dll
 - https://blogs.oracle.com/oraclemagazine/working-with-dates-in-plsql
 - https://www.oracletutorial.com/oracle-date-functions/
 - https://www.oracletutorial.com/oracle-date-functions/oracle-extract/
+
+## Some Useful Resources For The .Net Program
+- https://www.gitignore.io/
+- http://www.codeblocq.com/2016/01/Untrack-files-already-added-to-git-repository-based-on-gitignore/
+- https://www.newtonsoft.com/json/help/html/DeserializeObject.htm
+- https://gist.github.com/acamino/51ae7fa45708bc1e8bcda5657374aa48
+- http://json2csharp.com/
+- https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-write-to-a-text-file

@@ -17,13 +17,13 @@ run 03-update-populate-stars.sql
 
 ## Get Readings From API
 
-New readings can be added at any time form Anchormenstations API. 
+New readings can be added at any time form Anchormenstations API.
 
 **Just run the .Net Core 3 program:**
 
 ```bash
 cd ITRW321-Semester_Project/Output-GetDataFromAPI-GenerateSQL
-dotnet GetDataFromAPI-GenerateSQL.dll 
+dotnet GetDataFromAPI-GenerateSQL.dll
 ```
 
 ## Work Allocation
@@ -40,7 +40,7 @@ dotnet GetDataFromAPI-GenerateSQL.dll
 - [x] Populate fact table: *FACT_SUBTYPES*.
 - [x] Generate view for *Air Pressure per station*.
 - [x] Generate view for *Air Pressure per location*.
-- [ ] Generate view for *Age of Customer per Subscription*.
+- [x] Generate view for *Age of Customer per Subscription*.
 
 **Coenraad**
 - [x] Populate fact table: *FACT_READINGS*.
@@ -66,3 +66,11 @@ dotnet GetDataFromAPI-GenerateSQL.dll
 - https://blogs.oracle.com/oraclemagazine/working-with-dates-in-plsql
 - https://www.oracletutorial.com/oracle-date-functions/
 - https://www.oracletutorial.com/oracle-date-functions/oracle-extract/
+
+## Some Useful Resources For The .Net Program
+- https://www.gitignore.io/
+- http://www.codeblocq.com/2016/01/Untrack-files-already-added-to-git-repository-based-on-gitignore/
+- https://www.newtonsoft.com/json/help/html/DeserializeObject.htm
+- https://gist.github.com/acamino/51ae7fa45708bc1e8bcda5657374aa48
+- http://json2csharp.com/
+- https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/file-system/how-to-write-to-a-text-file

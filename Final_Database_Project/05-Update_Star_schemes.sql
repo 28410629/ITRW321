@@ -1,85 +1,137 @@
---RESET FOR update
-DELETE FROM FACT_SUBTYPES;
-DELETE FROM FACT_SALARYPAID;
-DELETE FROM FACT_READING;
-DELETE FROM DIM_SUBSCRIPTION;
-DELETE FROM DIM_CUSTOMER;
-DELETE FROM DIM_SALARY;
-DELETE FROM DIM_EMPLOYEE;
-DELETE FROM DIM_TIME;
-DELETE FROM DIM_LOCATION;
-DELETE FROM DIM_STATION;
-DELETE FROM DIM_TIME_SALARY;
 
---##################READINGS STAR SCHEME####################
+--##################READINGS STAR SCHEME#################### MERGE - DONE
 --------------------------------------------------------------------------------
---Populate DIM_TIMES
+--Update DIM_TIMES
 --------------------------------------------------------------------------------
-INSERT INTO DIM_TIME (time_id, hour, day, week, month, year)
-SELECT DISTINCT
-    READING_DATE,
-    TO_CHAR(READING_DATE, 'HH24') AS HOUR,
-    EXTRACT (day FROM READING_DATE) AS DAY,
-    to_number(to_char(READING_DATE,'ww')) AS WEEK,
-    EXTRACT (month FROM READING_DATE) AS MONTH,
-    EXTRACT (year FROM READING_DATE) AS YEAR
-FROM STATIONREADING;
+MERGE INTO DIM_TIME T
+USING
+        (SELECT DISTINCT
+            READING_DATE,
+            TO_CHAR(READING_DATE, 'HH24') AS HOUR,
+            EXTRACT (day FROM READING_DATE) AS DAY,
+            to_number(to_char(READING_DATE,'ww')) AS WEEK,
+            EXTRACT (month FROM READING_DATE) AS MONTH,
+            EXTRACT (year FROM READING_DATE) AS YEAR
+            FROM STATIONREADING) R
+ON (T.TIME_ID = R.READING_DATE)
+WHEN NOT MATCHED THEN
+INSERT (time_id, hour, day, week, month, year)
+VALUES (R.READING_DATE,
+        TO_CHAR(R.READING_DATE, 'HH24'),
+        EXTRACT (day FROM R.READING_DATE),
+        to_number(to_char(R.READING_DATE,'ww')) ,
+        EXTRACT (month FROM R.READING_DATE),
+        EXTRACT (year FROM R.READING_DATE));
+
 
 --Populate second tiem table
-INSERT INTO DIM_TIME_SALARY (time_id, hour, day, week, month, year)
-SELECT DISTINCT
-    DATEPAID,
-    TO_CHAR(DATEPAID, 'HH24') AS HOUR,
-    EXTRACT (day FROM DATEPAID) AS DAY,
-    to_number(to_char(DATEPAID,'ww')) AS WEEK,
-    EXTRACT (month FROM DATEPAID) AS MONTH,
-    EXTRACT (year FROM DATEPAID) AS YEAR
-FROM SALARY;
+MERGE INTO DIM_TIME_SALARY T
+USING
+        (SELECT DISTINCT
+            DATEPAID,
+            TO_CHAR(DATEPAID, 'HH24') AS HOUR,
+            EXTRACT (day FROM DATEPAID) AS DAY,
+            to_number(to_char(DATEPAID,'ww')) AS WEEK,
+            EXTRACT (month FROM DATEPAID) AS MONTH,
+            EXTRACT (year FROM DATEPAID) AS YEAR
+            FROM SALARY) R
+ON (T.TIME_ID = R.DATEPAID)
+WHEN NOT MATCHED THEN
+INSERT (time_id, hour, day, week, month, year)
+VALUES (R.DATEPAID,
+        TO_CHAR(R.DATEPAID, 'HH24'),
+        EXTRACT (day FROM R.DATEPAID),
+        to_number(to_char(R.DATEPAID,'ww')) ,
+        EXTRACT (month FROM R.DATEPAID),
+        EXTRACT (year FROM R.DATEPAID));
 --------------------------------------------------------------------------------
 --Populate DIM_location
 --------------------------------------------------------------------------------
-INSERT INTO DIM_LOCATION
-    SELECT location.locationid, location.locationname
-    FROM location;
+MERGE INTO DIM_LOCATION L
+USING
+    (SELECT location.locationid, location.locationname
+     FROM location) R
+ON (L.LOCATION_ID = R.LOCATIONID)
+WHEN MATCHED THEN
+    UPDATE SET L.LOCATION_NAME = R.LOCATIONNAME
+    WHERE L.LOCATION_ID = R.LOCATIONID AND L.LOCATION_NAME <> R.LOCATIONNAME
+WHEN NOT MATCHED THEN
+    INSERT (LOCATION_ID, LOCATION_NAME)
+    VALUES(R.LOCATIONID, R.LOCATIONNAME);
+
+
 
 --------------------------------------------------------------------------------
 --Populate DIM_STATION
 --------------------------------------------------------------------------------
-INSERT INTO DIM_STATION
-    SELECT station.stationid, station.isactive
-    FROM station;
+MERGE INTO DIM_STATION S
+USING
+    (SELECT station.stationid, station.isactive
+     FROM station) R
+ON (S.STATION_ID = R.STATIONID)
+WHEN MATCHED THEN
+    UPDATE SET S.ISACTIVE = R.ISACTIVE
+    WHERE S.STATION_ID = R.STATIONID AND S.ISACTIVE <> R.ISACTIVE
+WHEN NOT MATCHED THEN
+    INSERT (STATION_ID, ISACTIVE)
+    VALUES(R.STATIONID, R.ISACTIVE);
 --------------------------------------------------------------------------------
 --Populate FACT_READING
 --------------------------------------------------------------------------------
 
-INSERT INTO FACT_READING
-SELECT DISTINCT s.stationid, s.locationid, r.reading_date,
-    NVL((
-        SELECT AVG(stationreading.air_pressure)
-        FROM stationreading
-        WHERE stationid = s.stationid
-        AND stationreading.READING_DATE = r.reading_date
-    ),0) A,
-    NVL((
-        SELECT AVG(stationreading.ambient_light)
-        FROM stationreading
-        WHERE stationid = s.stationid
-        AND stationreading.READING_DATE = r.reading_date
-    ),0) L,
-    NVL((
-        SELECT AVG(stationreading.humidity)
-        FROM stationreading
-        WHERE stationid = s.stationid
-        AND stationreading.READING_DATE = r.reading_date
-   ),0) H,
-    NVL((
-        SELECT AVG(stationreading.temperature)
-        FROM stationreading
-        WHERE stationid = s.stationid
-        AND stationreading.READING_DATE = r.reading_date
-    ),0)T
-FROM station  s JOIN stationreading r
-ON s.stationid = r.stationid;
+MERGE INTO FACT_READING F
+USING
+        (SELECT DISTINCT s.stationid, s.locationid, r.reading_date,
+            NVL((
+                SELECT AVG(stationreading.air_pressure)
+                FROM stationreading
+                WHERE stationid = s.stationid
+                AND stationreading.READING_DATE = r.reading_date
+            ),0) AIR,
+            NVL((
+                SELECT AVG(stationreading.ambient_light)
+                FROM stationreading
+                WHERE stationid = s.stationid
+                AND stationreading.READING_DATE = r.reading_date
+            ),0) LIGHT,
+            NVL((
+                SELECT AVG(stationreading.humidity)
+                FROM stationreading
+                WHERE stationid = s.stationid
+                AND stationreading.READING_DATE = r.reading_date
+           ),0) HUMID,
+            NVL((
+                SELECT AVG(stationreading.temperature)
+                FROM stationreading
+                WHERE stationid = s.stationid
+                AND stationreading.READING_DATE = r.reading_date
+            ),0)TEMP
+        FROM station  s JOIN stationreading r
+        ON s.stationid = r.stationid) R
+ON (F.STATION_ID = R.STATIONID AND F.LOCATION_ID=R.LOCATIONID AND F.TIME_ID=R.READING_DATE)
+WHEN MATCHED THEN
+    UPDATE SET  AVG_AIRPRESSURE = R.AIR,
+                AVG_AMBIENTLIGHT = R.LIGHT,
+                AVG_HUMIDITY = R.HUMID,
+                AVG_TEMP = R.TEMP
+    WHERE
+                (F.STATION_ID = R.STATIONID AND F.LOCATION_ID=R.LOCATIONID AND F.TIME_ID=R.READING_DATE)
+                AND
+                (F.AVG_AIRPRESSURE <> R.AIR
+                OR F.AVG_AMBIENTLIGHT <> R.LIGHT
+                OR F.AVG_HUMIDITY <> R.HUMID
+                OR F.AVG_TEMP <> R.TEMP)
+WHEN NOT MATCHED THEN
+    INSERT(STATION_ID, LOCATION_ID, TIME_ID, AVG_AIRPRESSURE, AVG_AMBIENTLIGHT, AVG_HUMIDITY, AVG_TEMP)
+    VALUES(R.STATIONID, R.LOCATIONID, R.READING_DATE, R.AIR, R.LIGHT, R.HUMID, TEMP);
+
+
+
+
+
+
+
+
 --------------------------------------------------------------------------------
 --###################SUBTYPE STAR SCHEME####################
 --------------------------------------------------------------------------------

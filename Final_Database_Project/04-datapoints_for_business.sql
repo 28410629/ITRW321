@@ -1,97 +1,121 @@
 --------------------------------------------------------------------------------
---#################### 1. AVERGAE TEMPERATURE PER LOCATION ########################
+--#################### 1. AVERGAE TEMPERATURE PER LOCATION #####################
 --------------------------------------------------------------------------------
-
---Avergae temp per location for ALL TIME
+-- average temperature per lcoation per hour
 SELECT
+    T.HOUR AS "Hours of past day",
     L.LOCATION_NAME AS "Location Name",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_LOCATION L
 ON L.LOCATION_ID=F.LOCATION_ID
-GROUP BY L.LOCATION_NAME;
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-1
+GROUP by T.HOUR, L.LOCATION_NAME;
 --------------------------------------------------------------------------------
---Avergae temp per location for PAST HOUR
---------------------------------------------------------------------------------
+-- average temperature per lcoation per week
 SELECT
+    T.DAY AS "Days of previous week",
     L.LOCATION_NAME AS "Location Name",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_LOCATION L
-ON L.LOCATION_ID=F.LOCATION_ID AND F.TIME_ID > (SYSDATE-1/24)
-GROUP BY L.LOCATION_NAME;
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-7
+GROUP by T.DAY, L.LOCATION_NAME;
 --------------------------------------------------------------------------------
---Avergae temp per location for PAST DAY
---------------------------------------------------------------------------------
+-- average temperature per lcoation per month
 SELECT
+    T.DAY AS "Days of previous month",
     L.LOCATION_NAME AS "Location Name",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_LOCATION L
-ON L.LOCATION_ID=F.LOCATION_ID AND F.TIME_ID > (SYSDATE-1)
-GROUP BY L.LOCATION_NAME;
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-30
+GROUP by T.DAY, L.LOCATION_NAME;
 --------------------------------------------------------------------------------
---Avergae temp per location for WEEK
---------------------------------------------------------------------------------
+-- average temperature per lcoation per year
 SELECT
+    T.MONTH AS "Months of previous year",
     L.LOCATION_NAME AS "Location Name",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_LOCATION L
-ON L.LOCATION_ID=F.LOCATION_ID AND F.TIME_ID > (SYSDATE-7)
-GROUP BY L.LOCATION_NAME;
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-365
+GROUP by T.MONTH, L.LOCATION_NAME;
 --------------------------------------------------------------------------------
---Avergae temp per location for PAST YEAR
---------------------------------------------------------------------------------
+-- average temperature per lcoation per all years
 SELECT
+    T.YEAR AS "Year",
     L.LOCATION_NAME AS "Location Name",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_LOCATION L
-ON L.LOCATION_ID=F.LOCATION_ID AND F.TIME_ID > (SYSDATE-365)
-GROUP BY L.LOCATION_NAME;
---------------------------------------------------------------------------------
---#################### 2. AVERGAE TEMPERATURE PER STATION ########################
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID
+GROUP by T.YEAR, L.LOCATION_NAME;
 --------------------------------------------------------------------------------
 
---Avergae temp per active station for ALL TIME
+--------------------------------------------------------------------------------
+--#################### 2. AVERGAE TEMPERATURE PER STATION ######################
+--------------------------------------------------------------------------------
+
+--Avergae temp per station per hour for last day
 SELECT
+    T.HOUR AS "Hours of past day",
     S.STATION_ID AS "Station ID",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_STATION S
-ON S.STATION_ID=F.STATION_ID AND S.ISACTIVE = 1
-GROUP BY S.STATION_ID;
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-1
+GROUP by T.HOUR, S.STATION_ID;
 --------------------------------------------------------------------------------
---Avergae temp per active station for PAST HOUR
---------------------------------------------------------------------------------
+--Avergae temp per station per day for last week
 SELECT
+    T.DAY AS "Day of past week",
     S.STATION_ID AS "Station ID",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_STATION S
-ON S.STATION_ID=F.STATION_ID AND F.TIME_ID > (SYSDATE-1/24) AND S.ISACTIVE = 1
-GROUP BY S.STATION_ID;
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-7
+GROUP by T.DAY, S.STATION_ID;
 --------------------------------------------------------------------------------
---Avergae temp per active station for PAST DAY
---------------------------------------------------------------------------------
+--Avergae temp per station per day for last month
 SELECT
+    T.DAY AS "Day of past month",
     S.STATION_ID AS "Station ID",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_STATION S
-ON S.STATION_ID=F.STATION_ID AND F.TIME_ID > (SYSDATE-1) AND S.ISACTIVE = 1
-GROUP BY S.STATION_ID;
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-30
+GROUP by T.DAY, S.STATION_ID;
 --------------------------------------------------------------------------------
---Avergae temp per active station for PAST WEEK
---------------------------------------------------------------------------------
+--Avergae temp per station per month for last year
 SELECT
+    T.MONTH AS "Month of past year",
     S.STATION_ID AS "Station ID",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_STATION S
-ON S.STATION_ID=F.STATION_ID AND F.TIME_ID > (SYSDATE-7) AND S.ISACTIVE = 1
-GROUP BY S.STATION_ID;
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-365
+GROUP by T.MONTH, S.STATION_ID;
 --------------------------------------------------------------------------------
---Avergae temp per active station for PAST YEAR
---------------------------------------------------------------------------------
+--Avergae temp per station per year for all time
 SELECT
+    T.YEAR AS "Year",
     S.STATION_ID AS "Station ID",
     AVG(F.AVG_TEMP) AS "AVG Temp"
 FROM FACT_READING F JOIN DIM_STATION S
-ON S.STATION_ID=F.STATION_ID AND F.TIME_ID > (SYSDATE-365) AND S.ISACTIVE = 1
-GROUP BY S.STATION_ID;
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID
+GROUP by T.YEAR, S.STATION_ID;
+--------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --#################### 3. TOTAL SALARY PVER TIME PER EMPLOYEE TYPE ################
 --------------------------------------------------------------------------------

@@ -49,8 +49,8 @@ dotnet GetDataFromAPI-GenerateSQL.dll
 - [x] Create program to get readings from API and generate insert SQL.
 
 **Rainard**
-- [ ] Generate view for *Ambient light per station*.
-- [ ] Generate view for *Ambient light per location*.
+- [x] Generate view for *Ambient light per station*.
+- [x] Generate view for *Ambient light per location*.
 
 ## Some Useful Resources
 

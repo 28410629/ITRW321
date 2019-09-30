@@ -15,9 +15,9 @@ namespace GetDataFromAPI_GenerateSQL
             // Get objects
             Console.WriteLine("[ OK! ] Getting json for station 2347795");
             var station0 = GetJsonObject(@"http://weatherstationapi.ddns.net:5000/api/get/rawreadings/station/day?StationId=2347795");
-            Console.WriteLine("[ OK! ] Getting json for station 2347795");
+            Console.WriteLine("[ OK! ] Getting json for station 10359807");
             var station1 = GetJsonObject(@"http://weatherstationapi.ddns.net:5000/api/get/rawreadings/station/day?StationId=10359807");
-            Console.WriteLine("[ OK! ] Getting json for station 2347795");
+            Console.WriteLine("[ OK! ] Getting json for station 10359964");
             var station2 = GetJsonObject(@"http://weatherstationapi.ddns.net:5000/api/get/rawreadings/station/day?StationId=10359964");
             
             // Get statistics on objects

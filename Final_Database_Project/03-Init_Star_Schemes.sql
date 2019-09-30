@@ -51,57 +51,35 @@ INSERT INTO DIM_STATION
 --------------------------------------------------------------------------------
 --Populate FACT_READING
 --------------------------------------------------------------------------------
+
 INSERT INTO FACT_READING
-SELECT s.station_id, l.location_id, t.time_id,
+SELECT DISTINCT s.stationid, s.locationid, r.reading_date,
     NVL((
         SELECT AVG(stationreading.air_pressure)
         FROM stationreading
-        WHERE stationid = s.station_id
-        AND stationreading.READING_DATE = T.TIME_ID
+        WHERE stationid = s.stationid
+        AND stationreading.READING_DATE = r.reading_date
     ),0) A,
     NVL((
         SELECT AVG(stationreading.ambient_light)
         FROM stationreading
-        WHERE stationid = s.station_id
-        AND stationreading.READING_DATE = T.TIME_ID
+        WHERE stationid = s.stationid
+        AND stationreading.READING_DATE = r.reading_date
     ),0) L,
     NVL((
         SELECT AVG(stationreading.humidity)
         FROM stationreading
-        WHERE stationid = s.station_id
-        AND stationreading.READING_DATE = T.TIME_ID
+        WHERE stationid = s.stationid
+        AND stationreading.READING_DATE = r.reading_date
    ),0) H,
     NVL((
         SELECT AVG(stationreading.temperature)
         FROM stationreading
-        WHERE stationid = s.station_id
-        AND stationreading.READING_DATE = T.TIME_ID
+        WHERE stationid = s.stationid
+        AND stationreading.READING_DATE = r.reading_date
     ),0)T
-FROM dim_station s, dim_location l, dim_time t
-WHERE (
-        SELECT AVG(stationreading.air_pressure)
-        FROM stationreading
-        WHERE stationid = s.station_id
-        AND stationreading.READING_DATE = T.TIME_ID
-       ) IS NOT NULL AND
-       (
-        SELECT AVG(stationreading.ambient_light)
-        FROM stationreading
-        WHERE stationid = s.station_id
-        AND stationreading.READING_DATE = T.TIME_ID
-       ) IS NOT NULL AND
-       (
-        SELECT AVG(stationreading.humidity)
-        FROM stationreading
-        WHERE stationid = s.station_id
-        AND stationreading.READING_DATE = T.TIME_ID
-       ) IS NOT NULL AND
-       (
-        SELECT AVG(stationreading.temperature)
-        FROM stationreading
-        WHERE stationid = s.station_id
-        AND stationreading.READING_DATE = T.TIME_ID
-       ) IS NOT NULL;
+FROM station  s JOIN stationreading r
+ON s.stationid = r.stationid;
 --------------------------------------------------------------------------------
 --###################SUBTYPE STAR SCHEME####################
 --------------------------------------------------------------------------------
@@ -168,13 +146,13 @@ GROUP BY    s.salaryid;
 --Populate FACT_SALARYPAID
 --------------------------------------------------------------------------------
 INSERT INTO FACT_SALARYPAID
-SELECT  e.person_id AS "Person_ID",
-        s.salary_id AS "Salary_ID",
-        t.time_id AS "Time_ID"
-FROM    DIM_EMPLOYEE e,
-        DIM_SALARY s,
-        DIM_TIME_SALARY t
-GROUP BY    e.person_id,
-            s.salary_id,
-            t.time_id;
+SELECT  E.PERSON_ID AS "Person_ID",
+        S.SALARYID AS "Salary_ID",
+        S.DATEPAID AS "Time_ID"
+FROM    DIM_EMPLOYEE E,
+        SALARY S
+WHERE E.PERSON_ID=S.PERSONID
+GROUP BY    E.PERSON_ID,
+            S.SALARYID,
+            S.DATEPAID;
 --------------------------------------------------------------------------------

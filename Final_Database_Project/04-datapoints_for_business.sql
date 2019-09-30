@@ -117,52 +117,53 @@ ON F.TIME_ID=T.TIME_ID
 GROUP by T.YEAR, S.STATION_ID;
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
---#################### 3. TOTAL SALARY PVER TIME PER EMPLOYEE TYPE ################
+--#################### 3. TOTAL SALARY PVER TIME PER EMPLOYEE TYPE #############
 --------------------------------------------------------------------------------
 
---Total salary per employee type for ALL TIME
+--Total salary per employee type per day for PAST MONTH
 SELECT
+        T.DAY AS "Day",
         E.POSITION_TYPE AS "Employee Type",
         SUM(S.AMOUNT) as "Amount Paid"
-FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
-JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID
-GROUP BY E.POSITION_TYPE;
+FROM
+(FACT_SALARYPAID F JOIN DIM_EMPLOYEE E
+    ON E.PERSON_ID=F.PERSON_ID)
+JOIN DIM_SALARY S
+    ON F.SALARY_ID=S.SALARY_ID
+JOIN DIM_TIME_SALARY T
+    ON T.TIME_ID = F.TIME_ID
+    AND T.TIME_ID > SYSDATE-30
+GROUP BY T.DAY, E.POSITION_TYPE;
 --------------------------------------------------------------------------------
---Total salary per employee type for PAST HOUR
---------------------------------------------------------------------------------
+--Total salary per employee type per month for PAST YEAR
 SELECT
+        T.MONTH AS "Month",
         E.POSITION_TYPE AS "Employee Type",
         SUM(S.AMOUNT) as "Amount Paid"
-FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
-JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID AND F.TIME_ID > (SYSDATE-1/24)
-GROUP BY E.POSITION_TYPE;
+FROM
+(FACT_SALARYPAID F JOIN DIM_EMPLOYEE E
+    ON E.PERSON_ID=F.PERSON_ID)
+JOIN DIM_SALARY S
+    ON F.SALARY_ID=S.SALARY_ID
+JOIN DIM_TIME_SALARY T
+    ON T.TIME_ID = F.TIME_ID
+    AND T.TIME_ID > SYSDATE-365
+GROUP BY T.MONTH, E.POSITION_TYPE;
 --------------------------------------------------------------------------------
---Total salary per employee type for PAST DAY
---------------------------------------------------------------------------------
+--Total salary per employee type per year for all time
 SELECT
+        T.YEAR AS "Year",
         E.POSITION_TYPE AS "Employee Type",
         SUM(S.AMOUNT) as "Amount Paid"
-FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
-JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID AND F.TIME_ID > (SYSDATE-1)
-GROUP BY E.POSITION_TYPE;
+FROM
+(FACT_SALARYPAID F JOIN DIM_EMPLOYEE E
+    ON E.PERSON_ID=F.PERSON_ID)
+JOIN DIM_SALARY S
+    ON F.SALARY_ID=S.SALARY_ID
+JOIN DIM_TIME_SALARY T
+    ON T.TIME_ID = F.TIME_ID
+GROUP BY T.YEAR, E.POSITION_TYPE;
 --------------------------------------------------------------------------------
---Total salary per employee type for PAST WEEK
---------------------------------------------------------------------------------
-SELECT
-        E.POSITION_TYPE AS "Employee Type",
-        SUM(S.AMOUNT) as "Amount Paid"
-FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
-JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID AND F.TIME_ID > (SYSDATE-7)
-GROUP BY E.POSITION_TYPE;
---------------------------------------------------------------------------------
---Total salary per employee type for PAST YEAR
---------------------------------------------------------------------------------
-SELECT
-        E.POSITION_TYPE AS "Employee Type",
-        SUM(S.AMOUNT) as "Amount Paid"
-FROM    (DIM_EMPLOYEE E JOIN FACT_SALARYPAID F ON E.PERSON_ID=F.PERSON_ID)
-JOIN DIM_SALARY S ON F.SALARY_ID=S.SALARY_ID AND F.TIME_ID > (SYSDATE-365)
-GROUP BY E.POSITION_TYPE;
 --------------------------------------------------------------------------------
 --#################### 4. AVERAGE HUMIDITY PER LOCATION ########################
 --------------------------------------------------------------------------------

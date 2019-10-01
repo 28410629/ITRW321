@@ -55,11 +55,6 @@ ON L.LOCATION_ID=F.LOCATION_ID
 JOIN DIM_TIME T
 ON F.TIME_ID=T.TIME_ID
 GROUP by T.YEAR, L.LOCATION_NAME;
---------------------------------------------------------------------------------
-
-
-
-
 
 --------------------------------------------------------------------------------
 --#################### 2. AVERGAE TEMPERATURE PER STATION ######################
@@ -172,9 +167,6 @@ JOIN DIM_SALARY S
 JOIN DIM_TIME_SALARY T
     ON T.TIME_ID = F.TIME_ID
 GROUP BY T.YEAR, E.POSITION_TYPE;
---------------------------------------------------------------------------------
-
-
 
 
 
@@ -183,109 +175,118 @@ GROUP BY T.YEAR, E.POSITION_TYPE;
 --#################### 4. AVERAGE HUMIDITY PER LOCATION ########################
 --------------------------------------------------------------------------------
 
---Avergae humidity per location for ALL TIME
-SELECT l.location_name "Location Name", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_location l
+-- average humidity for the last day group in hours
+SELECT t.hour AS "Past 24 Hours", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
+FROM FACT_READING f 
+JOIN DIM_LOCATION l
 ON l.location_id = f.location_id
-GROUP BY l.location_name;
---------------------------------------------------------------------------------
---Avergae humidity per location for PAST HOUR
---------------------------------------------------------------------------------
-SELECT l.location_name "Location Name", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_location l
-ON l.location_id = f.location_id
-AND f.time_id > (SYSDATE-1/24)
-GROUP BY l.location_name;
---------------------------------------------------------------------------------
---Avergae humidity per location for PAST DAY
---------------------------------------------------------------------------------
-SELECT l.location_name "Location Name", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_location l
-ON l.location_id = f.location_id
-AND f.time_id > (SYSDATE-1)
-GROUP BY l.location_name;
---------------------------------------------------------------------------------
---Avergae humidity per location for WEEK
---------------------------------------------------------------------------------
-SELECT l.location_name "Location Name", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_location l
-ON l.location_id = f.location_id
-AND f.time_id > (SYSDATE-7)
-GROUP BY l.location_name;
---------------------------------------------------------------------------------
---Avergae humidity per location for PAST YEAR
---------------------------------------------------------------------------------
-SELECT l.location_name "Location Name", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_location l
-ON l.location_id = f.location_id
-AND f.time_id > (SYSDATE-365)
-GROUP BY l.location_name;
+JOIN DIM_TIME t
+ON f.time_id = t.time_id 
+AND t.time_id > SYSDATE-1
+GROUP BY t.hour, l.location_name;
 
+--------------------------------------------------------------------------------
+-- average temperature per lcoation per week
+SELECT t.day AS "Past Week's Calendar Days", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
+FROM FACT_READING f 
+JOIN DIM_LOCATION l
+ON l.location_id = f.location_id
+JOIN DIM_TIME t
+ON f.time_id = t.time_id 
+AND t.time_id > SYSDATE-7
+GROUP BY t.day, l.location_name;
 
+--------------------------------------------------------------------------------
+-- average temperature per lcoation per month
+SELECT t.day AS "Past Month's Calendar Days", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
+FROM FACT_READING f 
+JOIN DIM_LOCATION l
+ON l.location_id = f.location_id
+JOIN DIM_TIME t
+ON f.time_id = t.time_id 
+AND t.time_id > SYSDATE-30
+GROUP BY t.day, l.location_name;
 
+--------------------------------------------------------------------------------
+-- average temperature per lcoation per year
+SELECT t.month AS "Past Year's Calendar Months", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
+FROM FACT_READING f 
+JOIN DIM_LOCATION l
+ON l.location_id = f.location_id
+JOIN DIM_TIME t
+ON f.time_id = t.time_id 
+AND t.time_id > SYSDATE-365
+GROUP BY t.month, l.location_name;
 
+--------------------------------------------------------------------------------
+-- average temperature per lcoation per all years
+SELECT t.year AS "All Calendar Years", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
+FROM FACT_READING f 
+JOIN DIM_LOCATION l
+ON l.location_id = f.location_id
+JOIN DIM_TIME t
+ON f.time_id = t.time_id
+GROUP BY t.year, l.location_name;
 
 
 --------------------------------------------------------------------------------
 --#################### 5. AVERAGE HUMIDITY PER STATION ########################
 --------------------------------------------------------------------------------
-
---Avergae humidity per active station for ALL TIME
-SELECT s.station_id "Station ID", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_station s
-ON s.station_id = f.station_id
-AND s.isactive = 1
-GROUP BY s.station_id;
+--Avergae temp per station per hour for last day
+SELECT
+    T.HOUR AS "Hours of past day",
+    S.STATION_ID AS "Station ID",
+    AVG(F.AVG_TEMP) AS "AVG Humidity"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-1
+GROUP by T.HOUR, S.STATION_ID;
 --------------------------------------------------------------------------------
---Avergae humidity per active station for PAST HOUR
+--Avergae temp per station per day for last week
+SELECT
+    T.DAY AS "Day of past week",
+    S.STATION_ID AS "Station ID",
+    AVG(F.AVG_TEMP) AS "AVG Temp"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-7
+GROUP by T.DAY, S.STATION_ID;
 --------------------------------------------------------------------------------
-SELECT s.station_id "Station ID", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_station s
-ON s.station_id = f.station_id
-AND s.isactive = 1
-AND f.time_id > (SYSDATE-1/24)
-GROUP BY s.station_id;
+--Avergae temp per station per day for last month
+SELECT
+    T.DAY AS "Day of past month",
+    S.STATION_ID AS "Station ID",
+    AVG(F.AVG_TEMP) AS "AVG Temp"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-30
+GROUP by T.DAY, S.STATION_ID;
 --------------------------------------------------------------------------------
---Avergae humidity per active station for PAST DAY
+--Avergae temp per station per month for last year
+SELECT
+    T.MONTH AS "Month of past year",
+    S.STATION_ID AS "Station ID",
+    AVG(F.AVG_TEMP) AS "AVG Temp"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-365
+GROUP by T.MONTH, S.STATION_ID;
 --------------------------------------------------------------------------------
-SELECT s.station_id "Station ID", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_station s
-ON s.station_id = f.station_id
-AND s.isactive = 1
-AND f.time_id > (SYSDATE-1)
-GROUP BY s.station_id;
+--Avergae temp per station per year for all time
+SELECT
+    T.YEAR AS "Year",
+    S.STATION_ID AS "Station ID",
+    AVG(F.AVG_TEMP) AS "AVG Temp"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID
+GROUP by T.YEAR, S.STATION_ID;
 --------------------------------------------------------------------------------
---Avergae humidity per active station for PAST WEEK
---------------------------------------------------------------------------------
-SELECT s.station_id "Station ID", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_station s
-ON s.station_id = f.station_id
-AND s.isactive = 1
-AND f.time_id > (SYSDATE-7)
-GROUP BY s.station_id;
---------------------------------------------------------------------------------
---Avergae humidity per active station for PAST YEAR
---------------------------------------------------------------------------------
-SELECT s.station_id "Station ID", ROUND(AVG(f.avg_humidity),2) "Average Humidity"
-FROM fact_reading f
-JOIN dim_station s
-ON s.station_id = f.station_id
-AND s.isactive = 1
-AND f.time_id > (SYSDATE-365)
-GROUP BY s.station_id;
-
-
-
-
 
 
 --------------------------------------------------------------------------------

@@ -175,7 +175,7 @@ GROUP BY T.YEAR, E.POSITION_TYPE;
 --#################### 4. AVERAGE HUMIDITY PER LOCATION ########################
 --------------------------------------------------------------------------------
 
--- location average humidity for the last day group in hours
+-- average humidity for the last day group in hours
 SELECT t.hour AS "Past 24 Hours", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
 FROM FACT_READING f 
 JOIN DIM_LOCATION l
@@ -287,6 +287,9 @@ ON f.time_id = t.time_id
 GROUP by t.year, s.station_id;
 
 --------------------------------------------------------------------------------
+
+
+
 
 
 --------------------------------------------------------------------------------

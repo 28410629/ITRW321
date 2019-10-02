@@ -389,6 +389,7 @@ GROUP BY s.station_id;
 --------------------------------------------------------------------------------
 --Average ambientlight per active station for PAST YEAR
 --------------------------------------------------------------------------------
+--Average age per subscription type
 SELECT s.station_id "Station ID", ROUND(AVG(f.avg_ambientlight),2) "Average Ambient Light"
 FROM fact_reading f
 JOIN dim_station s
@@ -481,4 +482,11 @@ ON S.STATION_ID=F.STATION_ID
 JOIN DIM_TIME T
 ON F.TIME_ID=T.TIME_ID
 GROUP by T.YEAR, S.STATION_ID;
+--------------------------------------------------------------------------------
+--#################### 10. AVERGAE AGE PER SUBSCRIPTION TYPE ####################
+--------------------------------------------------------------------------------
+SELECT      s.name AS "Subscription", ROUND(AVG(ROUND((SYSDATE - c.birth_date)/365,0)),0) AS "Average Age"
+FROM        (DIM_SUBSCRIPTION s JOIN FACT_SUBTYPES f ON s.sub_id = f.sub_id)
+            JOIN DIM_CUSTOMER c on f.person_id = c.person_id
+GROUP BY    s.name;
 --------------------------------------------------------------------------------

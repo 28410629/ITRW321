@@ -83,3 +83,11 @@ JOIN DIM_TIME T
 ON F.TIME_ID=T.TIME_ID
 GROUP by T.YEAR, S.STATION_ID;
 --------------------------------------------------------------------------------
+
+
+
+
+SELECT      s.name AS "Subscription", AVG(ROUND((SYSDATE - c.birth_date)/365,0)) AS "Average Age"
+FROM        (DIM_SUBSCRIPTION s JOIN FACT_SUBTYPES f ON s.sub_id = f.sub_id)
+            JOIN DIM_CUSTOMER c on f.person_id = c.person_id
+GROUP BY    s.name;

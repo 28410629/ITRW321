@@ -433,7 +433,7 @@ JOIN DIM_TIME T
 ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-365
 GROUP by T.MONTH, L.LOCATION_NAME;
 --------------------------------------------------------------------------------
--- Average air pressure per lcoation per all years
+-- Average air pressure per lcoation per all time
 SELECT T.YEAR AS "Year", L.LOCATION_NAME AS "Location Name", AVG(F.avg_airpressure) AS "Average Air Pressure"
 FROM FACT_READING F JOIN DIM_LOCATION L
 ON L.LOCATION_ID=F.LOCATION_ID

@@ -138,12 +138,10 @@ WHEN NOT MATCHED THEN
 --Populate DIM_SUBSCRIPTION
 --------------------------------------------------------------------------------
 INSERT INTO DIM_SUBSCRIPTION
-SELECT  c.subscription_type AS "Subscription_Type",
-        (SELECT NAME FROM SUBSCRIPTION WHERE Subscription_Type = C.Subscription_Type) AS NAME
-FROM    PERSON p,
-        CUSTOMER c
-WHERE   c.PersonID = p.PersonID
-GROUP BY    c.subscription_type, 2;
+SELECT  c.subscription_type AS "SUB_ID",
+        c.name AS "NAME"
+FROM    SUBSCRIPTION c
+GROUP BY    c.subscription_type, c.name;
 --------------------------------------------------------------------------------
 --Populate DIM_CUSTOER
 --------------------------------------------------------------------------------

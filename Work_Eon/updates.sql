@@ -30,16 +30,6 @@
     WHEN NOT MATCHED THEN
         INSERT (PERSON_ID, BIRTH_DATE)
         VALUES (P.PERSONID, P.BIRTH_DATE);
-
-
-    INSERT INTO DIM_CUSTOMER
-    SELECT  c.personid AS "Person_ID",
-            p.birth_date AS "Birth_Date"
-    FROM    PERSON p,
-            CUSTOMER c
-    WHERE   c.PersonID = p.PersonID
-    GROUP BY    c.personid,
-                p.birth_date;
     --------------------------------------------------------------------------------
     --Populate FACT_SUBTYPE
     --------------------------------------------------------------------------------
@@ -59,6 +49,21 @@
     --------------------------------------------------------------------------------
     -----------------Populate DIM_EMPLOYEE
     --------------------------------------------------------------------------------
+    MERGE INTO DIM_EMPLOYEE D
+    USING
+        (SELECT Pe.PERSONID, Em.POSITIONTYPE
+        FROM PERSON Pe JOIN EMPLOYEE Em
+        ON Pe.PERSONID = Em.PERSONID
+        WHERE Pe.PERSONTYPE = 'E')  P
+    ON (D.PERSON_ID = P.PERSONID)
+    WHEN MATCHED THEN
+        UPDATE SET D.POSITION_TYPE = P.POSITIONTYPE
+        WHERE D.PERSON_ID = P.PERSONID
+        AND D.POSITION_TYPE <> P.POSITIONTYPE
+    WHEN NOT MATCHED THEN
+        INSERT (PERSON_ID, POSITION_TYPE)
+        VALUES (P.PERSONID, P.POSITIONTYPE);
+
     INSERT INTO DIM_EMPLOYEE
     SELECT  p.personid AS "Person_ID",
             e.positiontype AS "Employee Position Type"
@@ -70,15 +75,18 @@
     --------------------------------------------------------------------------------
     --Populate DIM_SALARY
     --------------------------------------------------------------------------------
-    INSERT INTO DIM_SALARY
-    SELECT  s.salaryid AS "Salary_ID",
-            AVG(s.amount) AS "Salary_Amount"
-    FROM    PERSON p,
-            EMPLOYEE e,
-            SALARY s
-    WHERE   e.PersonID = p.PersonID AND
-            s.personid = e.personid
-    GROUP BY    s.salaryid;
+    MERGE INTO DIM_SALARY D
+    USING
+        (SELECT SALARY.SALARYID, SALARY.AMOUNT
+        FROM SALARY) S
+    ON (D.SALARY_ID = S.SALARYID)
+    WHEN MATCHED THEN
+        UPDATE SET D.AMOUNT = S.AMOUNT
+        WHERE D.SALARY_ID = S.SALARYID
+        AND D.AMOUNT <> S.AMOUNT
+    WHEN NOT MATCHED THEN
+        INSERT (SALARY_ID, AMOUNT)
+        VALUES (S.SALARYID, S.AMOUNT);
     --------------------------------------------------------------------------------
     --Populate FACT_SALARYPAID
     --------------------------------------------------------------------------------

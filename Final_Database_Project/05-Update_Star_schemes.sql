@@ -137,22 +137,35 @@ WHEN NOT MATCHED THEN
 --------------------------------------------------------------------------------
 --Populate DIM_SUBSCRIPTION
 --------------------------------------------------------------------------------
-INSERT INTO DIM_SUBSCRIPTION
-SELECT  c.subscription_type AS "SUB_ID",
-        c.name AS "NAME"
-FROM    SUBSCRIPTION c
-GROUP BY    c.subscription_type, c.name;
+MERGE INTO DIM_SUBSCRIPTION D
+USING
+    (SELECT SUBSCRIPTION.SUBSCRIPTION_TYPE, SUBSCRIPTION.NAME
+    FROM SUBSCRIPTION) S
+ON (D.SUB_ID = S.SUBSCRIPTION_TYPE)
+WHEN MATCHED THEN
+    UPDATE SET D.NAME = S.NAME
+    WHERE D.SUB_ID = S.SUBSCRIPTION_TYPE
+    AND D.NAME <> S.NAME
+WHEN NOT MATCHED THEN
+    INSERT (SUB_ID, NAME)
+    VALUES (S.SUBSCRIPTION_TYPE, S.NAME);
 --------------------------------------------------------------------------------
 --Populate DIM_CUSTOER
 --------------------------------------------------------------------------------
-INSERT INTO DIM_CUSTOMER
-SELECT  c.personid AS "Person_ID",
-        p.birth_date AS "Birth_Date"
-FROM    PERSON p,
-        CUSTOMER c
-WHERE   c.PersonID = p.PersonID
-GROUP BY    c.personid,
-            p.birth_date;
+MERGE INTO DIM_CUSTOMER D
+USING
+    (SELECT Pe.PERSONID, Pe.BIRTH_DATE
+    FROM PERSON Pe JOIN CUSTOMER Cu
+    ON Pe.PERSONID = Cu.PERSONID
+    WHERE Pe.PERSONTYPE = 'C')  P
+ON (D.PERSON_ID = P.PERSONID)
+WHEN MATCHED THEN
+    UPDATE SET D.BIRTH_DATE = P.BIRTH_DATE
+    WHERE D.PERSON_ID = P.PERSONID
+    AND D.BIRTH_DATE <> P.BIRTH_DATE
+WHEN NOT MATCHED THEN
+    INSERT (PERSON_ID, BIRTH_DATE)
+    VALUES (P.PERSONID, P.BIRTH_DATE);
 --------------------------------------------------------------------------------
 --Populate FACT_SUBTYPE
 --------------------------------------------------------------------------------

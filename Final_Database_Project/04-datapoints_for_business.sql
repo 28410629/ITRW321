@@ -177,51 +177,51 @@ GROUP BY T.YEAR, E.POSITION_TYPE;
 
 -- average humidity for the last day group in hours
 SELECT t.hour AS "Past 24 Hours", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_LOCATION l
 ON l.location_id = f.location_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 AND t.time_id > SYSDATE-1
 GROUP BY t.hour, l.location_name;
 
 --------------------------------------------------------------------------------
 -- average temperature per lcoation per week
 SELECT t.day AS "Past Week's Calendar Days", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_LOCATION l
 ON l.location_id = f.location_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 AND t.time_id > SYSDATE-7
 GROUP BY t.day, l.location_name;
 
 --------------------------------------------------------------------------------
 -- average temperature per lcoation per month
 SELECT t.day AS "Past Month's Calendar Days", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_LOCATION l
 ON l.location_id = f.location_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 AND t.time_id > SYSDATE-30
 GROUP BY t.day, l.location_name;
 
 --------------------------------------------------------------------------------
 -- average temperature per lcoation per year
 SELECT t.month AS "Past Year's Calendar Months", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_LOCATION l
 ON l.location_id = f.location_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 AND t.time_id > SYSDATE-365
 GROUP BY t.month, l.location_name;
 
 --------------------------------------------------------------------------------
 -- average temperature per lcoation per all years
 SELECT t.year AS "All Calendar Years", l.location_name AS "Location Name", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_LOCATION l
 ON l.location_id = f.location_id
 JOIN DIM_TIME t
@@ -235,55 +235,55 @@ GROUP BY t.year, l.location_name;
 --Avergae temp per station per hour for last day
 
 SELECT t.hour AS "Past 24 Hours", s.station_id AS "Station ID", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_STATION s
 ON s.station_id = f.station_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 AND t.time_id > SYSDATE-1
 GROUP by t.hour, s.station_id;
 
 --------------------------------------------------------------------------------
 --Avergae temp per station per day for last week
 SELECT t.day AS "Past Week's Calendar Days", s.station_id AS "Station ID", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_STATION s
 ON s.station_id = f.station_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 AND t.time_id > SYSDATE-7
 GROUP by t.day, s.station_id;
 
 --------------------------------------------------------------------------------
 --Avergae temp per station per day for last month
 SELECT t.day AS "Past Month's Calendar Days", s.station_id AS "Station ID", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_STATION s
 ON s.station_id = f.station_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 AND t.time_id > SYSDATE-30
 GROUP by t.day, s.station_id;
 
 --------------------------------------------------------------------------------
 --Avergae temp per station per month for last year
 SELECT t.month AS "Past Year's Calendar Months", s.station_id AS "Station ID", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_STATION s
 ON s.station_id = f.station_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 AND t.time_id > SYSDATE-365
 GROUP by t.month, s.station_id;
 
 --------------------------------------------------------------------------------
 --Avergae temp per station per year for all time
 SELECT t.year AS "All Calendar Years", s.station_id AS "Station ID", AVG(f.avg_humidity) AS "Average Humidity"
-FROM FACT_READING f 
+FROM FACT_READING f
 JOIN DIM_STATION s
 ON s.station_id = f.station_id
 JOIN DIM_TIME t
-ON f.time_id = t.time_id 
+ON f.time_id = t.time_id
 GROUP by t.year, s.station_id;
 
 --------------------------------------------------------------------------------
@@ -312,7 +312,7 @@ ON l.location_id = f.location_id
 AND f.time_id > (SYSDATE-1/24)
 GROUP BY l.location_name;
 --------------------------------------------------------------------------------
---Average humidity per location for PAST DAY
+--Average ambientlight per location for PAST DAY
 --------------------------------------------------------------------------------
 SELECT l.location_name "Location Name", ROUND(AVG(f.avg_ambientlight),2) "Average Ambient Light"
 FROM fact_reading f
@@ -321,7 +321,7 @@ ON l.location_id = f.location_id
 AND f.time_id > (SYSDATE-1)
 GROUP BY l.location_name;
 --------------------------------------------------------------------------------
---Average humidity per location for WEEK
+--Average ambientlight per location for WEEK
 --------------------------------------------------------------------------------
 SELECT l.location_name "Location Name", ROUND(AVG(f.avg_ambientlight),2) "Average Ambient Light"
 FROM fact_reading f
@@ -357,7 +357,7 @@ ON s.station_id = f.station_id
 AND s.isactive = 1
 GROUP BY s.station_id;
 --------------------------------------------------------------------------------
---Avergae humidity per active station for PAST HOUR
+--Avergae ambientlight per active station for PAST HOUR
 --------------------------------------------------------------------------------
 SELECT s.station_id "Station ID", ROUND(AVG(f.avg_ambientlight),2) "Average Ambient Light"
 FROM fact_reading f
@@ -396,3 +396,89 @@ ON s.station_id = f.station_id
 AND s.isactive = 1
 AND f.time_id > (SYSDATE-365)
 GROUP BY s.station_id;
+
+--------------------------------------------------------------------------------
+--#################### 8. AVERGAE AIR PRESSURE PER LOCATION #####################
+--------------------------------------------------------------------------------
+-- Average air pressure per lcoation per hour
+SELECT T.HOUR AS "Hour of past day", L.LOCATION_NAME AS "Location Name", AVG(F.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_LOCATION L
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-1
+GROUP by T.HOUR, L.LOCATION_NAME;
+--------------------------------------------------------------------------------
+-- Average air pressure per lcoation per week
+SELECT T.DAY AS "Days of previous week", L.LOCATION_NAME AS "Location Name", AVG(f.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_LOCATION L
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-7
+GROUP by T.DAY, L.LOCATION_NAME;
+--------------------------------------------------------------------------------
+-- Average air pressure per lcoation per month
+SELECT T.DAY AS "Days of previous month", L.LOCATION_NAME AS "Location Name", AVG(F.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_LOCATION L
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-30
+GROUP by T.DAY, L.LOCATION_NAME;
+--------------------------------------------------------------------------------
+-- Average air pressure per lcoation per year
+SELECT T.MONTH AS "Months of previous year", L.LOCATION_NAME AS "Location Name", AVG(F.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_LOCATION L
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-365
+GROUP by T.MONTH, L.LOCATION_NAME;
+--------------------------------------------------------------------------------
+-- Average air pressure per lcoation per all years
+SELECT T.YEAR AS "Year", L.LOCATION_NAME AS "Location Name", AVG(F.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_LOCATION L
+ON L.LOCATION_ID=F.LOCATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID
+GROUP by T.YEAR, L.LOCATION_NAME;
+--------------------------------------------------------------------------------
+--#################### 9. AVERGAE AIR PRESSURE PER STATION ######################
+--------------------------------------------------------------------------------
+--Average air pressure per station per hour for last day
+SELECT T.HOUR AS "Hours of past day", S.STATION_ID AS "Station ID", AVG(f.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-1
+GROUP by T.HOUR, S.STATION_ID;
+--------------------------------------------------------------------------------
+--Average air pressure per station per day for last week
+SELECT T.DAY AS "Day of past week", S.STATION_ID AS "Station ID", AVG(f.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-7
+GROUP by T.DAY, S.STATION_ID;
+--------------------------------------------------------------------------------
+--Average air pressure per station per day for last month
+SELECT T.DAY AS "Day of past month", S.STATION_ID AS "Station ID", AVG(F.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-30
+GROUP by T.DAY, S.STATION_ID;
+--------------------------------------------------------------------------------
+--Average air pressure per station per month for last year
+SELECT T.MONTH AS "Month of past year", S.STATION_ID AS "Station ID", AVG(F.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID AND T.TIME_ID > SYSDATE-365
+GROUP by T.MONTH, S.STATION_ID;
+--------------------------------------------------------------------------------
+--Average air pressure per station per year for all time
+SELECT T.YEAR AS "Year", S.STATION_ID AS "Station ID", AVG(F.avg_airpressure) AS "Average Air Pressure"
+FROM FACT_READING F JOIN DIM_STATION S
+ON S.STATION_ID=F.STATION_ID
+JOIN DIM_TIME T
+ON F.TIME_ID=T.TIME_ID
+GROUP by T.YEAR, S.STATION_ID;
+--------------------------------------------------------------------------------

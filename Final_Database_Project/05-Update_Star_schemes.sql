@@ -123,7 +123,7 @@ WHEN MATCHED THEN
                 OR F.AVG_TEMP <> R.TEMP)
 WHEN NOT MATCHED THEN
     INSERT(STATION_ID, LOCATION_ID, TIME_ID, AVG_AIRPRESSURE, AVG_AMBIENTLIGHT, AVG_HUMIDITY, AVG_TEMP)
-    VALUES(R.STATIONID, R.LOCATIONID, R.READING_DATE, R.AIR, R.LIGHT, R.HUMID, TEMP);
+    VALUES(R.STATIONID, R.LOCATIONID, R.READING_DATE, R.AIR, R.LIGHT, R.HUMID, R.TEMP);
 
 
 
@@ -169,16 +169,19 @@ WHEN NOT MATCHED THEN
 --------------------------------------------------------------------------------
 --Populate FACT_SUBTYPE
 --------------------------------------------------------------------------------
-INSERT INTO FACT_SUBTYPES
-SELECT  p.personid AS "Person_ID",
-        c.subscription_type AS "Subscription_Type"
-FROM    PERSON p,
-        CUSTOMER c,
-        SUBSCRIPTION s
-WHERE   c.PersonID = p.PersonID
-        AND c.subscription_type = s.subscription_type
-GROUP BY    p.personid,
-            c.subscription_type;
+MERGE INTO FACT_SUBTYPES F
+  USING
+      ( SELECT  p.personid, c.subscription_type
+        FROM    PERSON p,
+                CUSTOMER c,
+                SUBSCRIPTION s
+        WHERE   c.PersonID = p.PersonID
+        AND     c.subscription_type = s.subscription_type
+      ) D
+  ON (F.PERSON_ID = D.PERSONID AND F.SUB_ID = D.SUBSCRIPTION_TYPE)
+  WHEN NOT MATCHED THEN
+      INSERT (Person_ID, SUB_ID)
+      VALUES (D.PERSONID, D.SUBSCRIPTION_TYPE);
 --------------------------------------------------------------------------------
 
 --###################SUBTYPE STAR SCHEME####################
@@ -217,14 +220,14 @@ WHEN NOT MATCHED THEN
 --------------------------------------------------------------------------------
 --Populate FACT_SALARYPAID
 --------------------------------------------------------------------------------
-INSERT INTO FACT_SALARYPAID
-SELECT  E.PERSON_ID AS "Person_ID",
-        S.SALARYID AS "Salary_ID",
-        S.DATEPAID AS "Time_ID"
-FROM    DIM_EMPLOYEE E,
-        SALARY S
-WHERE E.PERSON_ID=S.PERSONID
-GROUP BY    E.PERSON_ID,
-            S.SALARYID,
-            S.DATEPAID;
+MERGE INTO FACT_SALARYPAID F
+USING
+    (SELECT E.PERSON_ID, S.SALARYID, S.DATEPAID
+    FROM    DIM_EMPLOYEE E,
+            SALARY S
+    WHERE   E.PERSON_ID=S.PERSONID) D
+ON (F.PERSON_ID = D.PERSON_ID AND F.Salary_ID=D.SalaryID AND F.TIME_ID = D.DATEPAID)
+WHEN NOT MATCHED THEN
+    INSERT (PERSON_ID, SALARY_ID, TIME_ID)
+    VALUES (D.PERSON_ID, D.SALARYID, D.DATEPAID);
 --------------------------------------------------------------------------------

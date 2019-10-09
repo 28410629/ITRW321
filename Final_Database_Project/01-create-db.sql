@@ -447,9 +447,9 @@ CREATE SEQUENCE "STATION_HIST_SEQ" MINVALUE 1 MAXVALUE 9999999999999999999999999
 --  Sequence STATION_SEQ
 -----------------------------------------------------------------------
 CREATE SEQUENCE "STATION_SEQ" MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER NOCYCLE;
---------------------------------------------------------
+-----------------------------------------------------------------------
 --  Trigger FORECAST_TRG
---------------------------------------------------------
+-----------------------------------------------------------------------
 CREATE OR REPLACE TRIGGER "FORECAST_TRG"
 BEFORE INSERT ON FORECAST
 FOR EACH ROW
@@ -464,9 +464,9 @@ END;
 
 /
 ALTER TRIGGER "FORECAST_TRG" ENABLE;
---------------------------------------------------------
+-----------------------------------------------------------------------
 --  Trigger LOCATION_TRG
---------------------------------------------------------
+-----------------------------------------------------------------------
 CREATE OR REPLACE TRIGGER "LOCATION_TRG"
 BEFORE INSERT ON LOCATION
 FOR EACH ROW
@@ -481,9 +481,9 @@ END;
 
 /
 ALTER TRIGGER "LOCATION_TRG" ENABLE;
---------------------------------------------------------
+-----------------------------------------------------------------------
 --  Trigger PERSON_TRG
---------------------------------------------------------
+-----------------------------------------------------------------------
 CREATE OR REPLACE TRIGGER "PERSON_TRG"
 BEFORE INSERT ON PERSON
 FOR EACH ROW
@@ -498,9 +498,9 @@ END;
 
 /
 ALTER TRIGGER "PERSON_TRG" ENABLE;
---------------------------------------------------------
+-----------------------------------------------------------------------
 --  Trigger REPAIRLOG_TRG
---------------------------------------------------------
+-----------------------------------------------------------------------
 CREATE OR REPLACE TRIGGER "REPAIRLOG_TRG"
 BEFORE INSERT ON REPAIRLOG
 FOR EACH ROW
@@ -515,11 +515,9 @@ END;
 
 /
 ALTER TRIGGER "REPAIRLOG_TRG" ENABLE;
-
-
---------------------------------------------------------
+-----------------------------------------------------------------------
 --  Trigger SALARY_TRG
---------------------------------------------------------
+-----------------------------------------------------------------------
 CREATE OR REPLACE TRIGGER "SALARY_TRG"
 BEFORE INSERT ON SALARY
 FOR EACH ROW
@@ -534,9 +532,9 @@ END;
 
 /
 ALTER TRIGGER "SALARY_TRG" ENABLE;
---------------------------------------------------------
+-----------------------------------------------------------------------
 --  Trigger STATIONREADING_TRG
---------------------------------------------------------
+-----------------------------------------------------------------------
 CREATE OR REPLACE TRIGGER "STATIONREADING_TRG"
 BEFORE INSERT ON STATIONREADING
 FOR EACH ROW
@@ -551,9 +549,9 @@ END;
 
 /
 ALTER TRIGGER "STATIONREADING_TRG" ENABLE;
---------------------------------------------------------
+-----------------------------------------------------------------------
 --  Trigger STATION_HIST_TRG
---------------------------------------------------------
+-----------------------------------------------------------------------
 CREATE OR REPLACE TRIGGER "STATION_HIST_TRG"
 BEFORE INSERT ON STATION_HIST
 FOR EACH ROW
@@ -568,9 +566,9 @@ END;
 
 /
 ALTER TRIGGER "STATION_HIST_TRG" ENABLE;
---------------------------------------------------------
+-----------------------------------------------------------------------
 --  Trigger STATION_TRG
---------------------------------------------------------
+-----------------------------------------------------------------------
 CREATE OR REPLACE TRIGGER "STATION_TRG"
 BEFORE INSERT ON STATION
 FOR EACH ROW

@@ -224,24 +224,6 @@ Table "CUSTOMER" altered.
 Table "EMPLOYEE" altered.
 
 
-Error starting at line : 287 in command -
-ALTER TABLE "CUSTOMER" ADD CONSTRAINT "CUSTOMER_FK" FOREIGN KEY ("SUBSCRIPTION_TYPE")
-REFERENCES "SUBSCRIPTION" ("SUBSCRIPTION_TYPE") ENABLE
-Error report -
-ORA-02275: such a referential constraint already exists in the table
-02275. 00000 -  "such a referential constraint already exists in the table"
-*Cause:    Self-evident.
-*Action:   Remove the extra constraint.
-
-Error starting at line : 289 in command -
-ALTER TABLE "CUSTOMER" ADD CONSTRAINT "CUST_ISA_PERSON" FOREIGN KEY ("PERSONID", "PERSONTYPE")
-REFERENCES "PERSON" ("PERSONID", "PERSONTYPE") ENABLE
-Error report -
-ORA-02275: such a referential constraint already exists in the table
-02275. 00000 -  "such a referential constraint already exists in the table"
-*Cause:    Self-evident.
-*Action:   Remove the extra constraint.
-
 Table "SALARY" altered.
 
 
@@ -290,7 +272,7 @@ Sequence "STATION_HIST_SEQ" created.
 Sequence "STATION_SEQ" created.
 
 
-Error starting at line : 373 in command -
+Error starting at line : 366 in command -
 CREATE UNIQUE INDEX "SALARY_PK" ON "SALARY" ("SALARYID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -298,7 +280,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 378 in command -
+Error starting at line : 371 in command -
 CREATE UNIQUE INDEX "EMAIL_UK" ON "PERSON" ("EMAIL")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -306,7 +288,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 382 in command -
+Error starting at line : 375 in command -
 CREATE UNIQUE INDEX "CUSTOMER_PK" ON "CUSTOMER" ("PERSONID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -314,7 +296,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 386 in command -
+Error starting at line : 379 in command -
 CREATE UNIQUE INDEX "SUBSCRIPTION_PK" ON "SUBSCRIPTION" ("SUBSCRIPTION_TYPE")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -322,7 +304,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 390 in command -
+Error starting at line : 383 in command -
 CREATE UNIQUE INDEX "STATION_PK" ON "STATION" ("STATIONID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -330,7 +312,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 394 in command -
+Error starting at line : 387 in command -
 CREATE UNIQUE INDEX "FORECAST_PK" ON "FORECAST" ("FORECAST_ID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -338,7 +320,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 399 in command -
+Error starting at line : 392 in command -
 CREATE UNIQUE INDEX "EMPLOYEE_PK" ON "EMPLOYEE" ("PERSONID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -346,7 +328,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 403 in command -
+Error starting at line : 396 in command -
 CREATE UNIQUE INDEX "PERSON_PK" ON "PERSON" ("PERSONID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -354,7 +336,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 407 in command -
+Error starting at line : 400 in command -
 CREATE UNIQUE INDEX "UNIQ_PERSON_TYPE" ON "PERSON" ("PERSONID", "PERSONTYPE")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -362,7 +344,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 411 in command -
+Error starting at line : 404 in command -
 CREATE UNIQUE INDEX "STATIONREADING_PK" ON "STATIONREADING" ("READING_ID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -370,7 +352,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 415 in command -
+Error starting at line : 408 in command -
 CREATE UNIQUE INDEX "LOCATION_PK" ON "LOCATION" ("LOCATIONID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -378,7 +360,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 419 in command -
+Error starting at line : 412 in command -
 CREATE UNIQUE INDEX "TECHNICIAN_PK" ON "TECHNICIAN" ("PERSONID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -386,7 +368,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 423 in command -
+Error starting at line : 416 in command -
 CREATE UNIQUE INDEX "REPAIRLOG_PK" ON "REPAIRLOG" ("REPAIRID", "PERSONID", "STATIONID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -394,7 +376,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 428 in command -
+Error starting at line : 421 in command -
 CREATE UNIQUE INDEX "STATION_HIST_PK" ON "STATION_HIST" ("HIST_ID")
 Error report -
 ORA-00955: name is already used by an existing object
@@ -402,7 +384,7 @@ ORA-00955: name is already used by an existing object
 *Cause:    
 *Action:
 
-Error starting at line : 432 in command -
+Error starting at line : 425 in command -
 CREATE UNIQUE INDEX "UNIQ_EMPL_TYPE" ON "EMPLOYEE" ("PERSONID", "POSITIONTYPE")
 Error report -
 ORA-00955: name is already used by an existing object

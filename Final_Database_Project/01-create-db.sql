@@ -363,66 +363,66 @@ CREATE SEQUENCE  "STATION_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999
 --------------------------------------------------------
 --  Index SALARY_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "SALARY_PK" ON "SALARY" ("SALARYID");
+-- CREATE UNIQUE INDEX "SALARY_PK" ON "SALARY" ("SALARYID");
 --------------------------------------------------------
 --  Index EMAIL_UK
 --------------------------------------------------------
 
-CREATE UNIQUE INDEX "EMAIL_UK" ON "PERSON" ("EMAIL");
+-- CREATE UNIQUE INDEX "EMAIL_UK" ON "PERSON" ("EMAIL");
 --------------------------------------------------------
 --  Index CUSTOMER_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "CUSTOMER_PK" ON "CUSTOMER" ("PERSONID");
+-- CREATE UNIQUE INDEX "CUSTOMER_PK" ON "CUSTOMER" ("PERSONID");
 --------------------------------------------------------
 --  Index SUBSCRIPTION_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "SUBSCRIPTION_PK" ON "SUBSCRIPTION" ("SUBSCRIPTION_TYPE");
+-- CREATE UNIQUE INDEX "SUBSCRIPTION_PK" ON "SUBSCRIPTION" ("SUBSCRIPTION_TYPE");
 --------------------------------------------------------
 --  Index STATION_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "STATION_PK" ON "STATION" ("STATIONID");
+-- CREATE UNIQUE INDEX "STATION_PK" ON "STATION" ("STATIONID");
 --------------------------------------------------------
 --  Index FORECAST_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "FORECAST_PK" ON "FORECAST" ("FORECAST_ID");
+-- CREATE UNIQUE INDEX "FORECAST_PK" ON "FORECAST" ("FORECAST_ID");
 --------------------------------------------------------
 --  Index EMPLOYEE_PK
 --------------------------------------------------------
 
-CREATE UNIQUE INDEX "EMPLOYEE_PK" ON "EMPLOYEE" ("PERSONID");
+-- CREATE UNIQUE INDEX "EMPLOYEE_PK" ON "EMPLOYEE" ("PERSONID");
 --------------------------------------------------------
 --  Index PERSON_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "PERSON_PK" ON "PERSON" ("PERSONID");
+-- CREATE UNIQUE INDEX "PERSON_PK" ON "PERSON" ("PERSONID");
 --------------------------------------------------------
 --  Index UNIQ_PERSON_TYPE
 --------------------------------------------------------
-CREATE UNIQUE INDEX "UNIQ_PERSON_TYPE" ON "PERSON" ("PERSONID", "PERSONTYPE");
+-- CREATE UNIQUE INDEX "UNIQ_PERSON_TYPE" ON "PERSON" ("PERSONID", "PERSONTYPE");
 --------------------------------------------------------
 --  Index STATIONREADING_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "STATIONREADING_PK" ON "STATIONREADING" ("READING_ID");
+-- CREATE UNIQUE INDEX "STATIONREADING_PK" ON "STATIONREADING" ("READING_ID");
 --------------------------------------------------------
 --  Index LOCATION_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "LOCATION_PK" ON "LOCATION" ("LOCATIONID");
+-- CREATE UNIQUE INDEX "LOCATION_PK" ON "LOCATION" ("LOCATIONID");
 --------------------------------------------------------
 --  Index TECHNICIAN_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "TECHNICIAN_PK" ON "TECHNICIAN" ("PERSONID");
+-- CREATE UNIQUE INDEX "TECHNICIAN_PK" ON "TECHNICIAN" ("PERSONID");
 --------------------------------------------------------
 --  Index REPAIRLOG_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "REPAIRLOG_PK" ON "REPAIRLOG" ("REPAIRID", "PERSONID", "STATIONID");
+-- CREATE UNIQUE INDEX "REPAIRLOG_PK" ON "REPAIRLOG" ("REPAIRID", "PERSONID", "STATIONID");
 
 --------------------------------------------------------
 --  Index STATION_HIST_PK
 --------------------------------------------------------
-CREATE UNIQUE INDEX "STATION_HIST_PK" ON "STATION_HIST" ("HIST_ID");
+-- CREATE UNIQUE INDEX "STATION_HIST_PK" ON "STATION_HIST" ("HIST_ID");
 --------------------------------------------------------
 --  Index UNIQ_EMPL_TYPE
 --------------------------------------------------------
-CREATE UNIQUE INDEX "UNIQ_EMPL_TYPE" ON "EMPLOYEE" ("PERSONID", "POSITIONTYPE");
+-- CREATE UNIQUE INDEX "UNIQ_EMPL_TYPE" ON "EMPLOYEE" ("PERSONID", "POSITIONTYPE");
 --------------------------------------------------------
 --------------------------------------------------------
 --  Trigger FORECAST_TRG

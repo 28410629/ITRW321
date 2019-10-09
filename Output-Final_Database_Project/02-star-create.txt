@@ -1,0 +1,114 @@
+
+Table FACT_SALARYPAID dropped.
+
+
+Table FACT_SUBTYPES dropped.
+
+
+Table FACT_READING dropped.
+
+
+Table DIM_STATION dropped.
+
+
+Table DIM_LOCATION dropped.
+
+
+Table DIM_CUSTOMER dropped.
+
+
+Table DIM_SUBSCRIPTION dropped.
+
+
+Table DIM_SALARY dropped.
+
+
+Table DIM_EMPLOYEE dropped.
+
+
+Table DIM_TIME dropped.
+
+
+Table DIM_TIME_SALARY dropped.
+
+
+Table DIM_STATION created.
+
+
+Table DIM_LOCATION created.
+
+
+Table DIM_TIME created.
+
+
+Table DIM_TIME_SALARY created.
+
+
+Table FACT_READING created.
+
+
+Table FACT_READING altered.
+
+
+Table FACT_READING altered.
+
+
+Table FACT_READING altered.
+
+
+Index IDX_FK_STATIONID created.
+
+
+Index IDX_FK_LOCATIONID created.
+
+
+Index IDX_FK_TIMEID_READING created.
+
+
+Table DIM_SUBSCRIPTION created.
+
+
+Table DIM_CUSTOMER created.
+
+
+Table FACT_SUBTYPES created.
+
+
+Table FACT_SUBTYPES altered.
+
+
+Table FACT_SUBTYPES altered.
+
+
+Index IDX_FK_SUBID created.
+
+
+Index IDX_FK_PERSONID_SUB created.
+
+
+Table DIM_SALARY created.
+
+
+Table DIM_EMPLOYEE created.
+
+
+Table FACT_SALARYPAID created.
+
+
+Table FACT_SALARYPAID altered.
+
+
+Table FACT_SALARYPAID altered.
+
+
+Table FACT_SALARYPAID altered.
+
+
+Index IDX_FK_PERSONID created.
+
+
+Index IDX_FK_SALARYID created.
+
+
+Index IDX_FK_TIMEID created.
+

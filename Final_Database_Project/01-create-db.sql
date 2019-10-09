@@ -281,14 +281,7 @@ REFERENCES "PERSON" ("PERSONID", "PERSONTYPE") ENABLE;
 ALTER TABLE "EMPLOYEE" ADD CONSTRAINT "PERSON_ISA_EMPL" FOREIGN KEY ("PERSONID", "PERSONTYPE")
 REFERENCES "PERSON" ("PERSONID", "PERSONTYPE") ENABLE;
 --------------------------------------------------------
---------------------------------------------------------
---  Reference Constraints for Table CUSTOMER
---------------------------------------------------------
-ALTER TABLE "CUSTOMER" ADD CONSTRAINT "CUSTOMER_FK" FOREIGN KEY ("SUBSCRIPTION_TYPE")
-REFERENCES "SUBSCRIPTION" ("SUBSCRIPTION_TYPE") ENABLE;
-ALTER TABLE "CUSTOMER" ADD CONSTRAINT "CUST_ISA_PERSON" FOREIGN KEY ("PERSONID", "PERSONTYPE")
-REFERENCES "PERSON" ("PERSONID", "PERSONTYPE") ENABLE;
---------------------------------------------------------
+
 --------------------------------------------------------
 --  Reference Constraints for Table SALARY
 --------------------------------------------------------

@@ -26,9 +26,6 @@ DROP
 -----------------------------------------------------------------------
 --STAR SCHEME 1
 -----------------------------------------------------------------------
-
-
-
 CREATE TABLE DIM_STATION (
   "STATION_ID" NUMBER(6, 0) PRIMARY KEY,
   "ISACTIVE" NUMBER(1, 0)
@@ -81,7 +78,6 @@ ALTER TABLE
   FACT_READING
 ADD
   CONSTRAINT TIMEP_FK FOREIGN KEY("TIME_ID") REFERENCES DIM_TIME("TIME_ID");
-
 -----------------------------------------------------------------------
 --STAR SCHEME 2
 -----------------------------------------------------------------------
@@ -111,7 +107,6 @@ ALTER TABLE
   FACT_SUBTYPES
 ADD
   CONSTRAINT PERSON_FK FOREIGN KEY ("PERSON_ID") REFERENCES DIM_CUSTOMER("PERSON_ID");
-
 -----------------------------------------------------------------------
 -- STAR SCHEME 3
 -----------------------------------------------------------------------
